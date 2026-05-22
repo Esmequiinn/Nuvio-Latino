@@ -67,6 +67,17 @@
       "filename": "providers/seriesmetro.js",
       "enabled": true,
       "contentLanguage": ["es"]
+    },
+    {
+      "id": "peliserieshoy",
+      "name": "PelisSeriesHoy",
+      "description": "Streams en Latino desde PelisSeriesHoy.",
+      "version": "1.0.0",
+      "author": "KennethJYS",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/peliserieshoy.js",
+      "enabled": true,
+      "contentLanguage": ["es"]
     }
   ]
 }
