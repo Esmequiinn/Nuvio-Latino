@@ -608,6 +608,7 @@ function resolve4(embedUrl) {
     }
   });
 }
+var import_crypto_js2 = __toESM(require("crypto-js"));
 var TMDB_API_KEY = "439c478a771f35c05022f9feabcca01c";
 var UA6 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 var BASE_URL = "https://embed69.org";
@@ -636,15 +637,23 @@ var SERVER_LABELS = {
   "vidhide": "VidHide"
 };
 var LANG_PRIORITY = ["LAT", "ESP", "SUB"];
-function decodeJwtPayload(token) {
+function decryptEmbedLink(encryptedLink, aesKeyWordArray) {
   try {
-    const parts = token.split(".");
-    if (parts.length < 2)
-      return null;
-    let payload = parts[1].replace(/-/g, "+").replace(/_/g, "/");
-    payload += "=".repeat((4 - payload.length % 4) % 4);
-    return JSON.parse(atob(payload));
+    const rawData = import_crypto_js2.default.enc.Base64.parse(encryptedLink);
+    const iv = import_crypto_js2.default.lib.WordArray.create(rawData.words.slice(0, 4), 16);
+    const ciphertext = import_crypto_js2.default.lib.WordArray.create(rawData.words.slice(4), rawData.sigBytes - 16);
+    const cipherParams = import_crypto_js2.default.lib.CipherParams.create({
+      ciphertext
+    });
+    const decrypted = import_crypto_js2.default.AES.decrypt(cipherParams, aesKeyWordArray, {
+      iv,
+      mode: import_crypto_js2.default.mode.CBC,
+      padding: import_crypto_js2.default.pad.Pkcs7
+    });
+    const decryptedText = decrypted.toString(import_crypto_js2.default.enc.Utf8);
+    return decryptedText || null;
   } catch (e) {
+    console.log(`[Embed69] Error desencriptando con CryptoJS: ${e.message}`);
     return null;
   }
 }
@@ -711,15 +720,15 @@ function getStreams(tmdbId, mediaType, season, episode) {
         for (const embed of section.sortedEmbeds || []) {
           if (embed.servername === "download")
             continue;
-          const payload = decodeJwtPayload(embed.link);
-          if (!payload || !payload.link)
+          const decryptedUrl = decryptEmbedLink(embed.link, aesKey);
+          if (!decryptedUrl)
             continue;
-          const resolver = getResolver(payload.link);
+          const resolver = getResolver(decryptedUrl);
           if (!resolver) {
-            console.log(`[Embed69] Sin resolver para ${embed.servername}: ${payload.link.substring(0, 60)}`);
+            console.log(`[Embed69] Sin resolver para ${embed.servername}: ${decryptedUrl.substring(0, 60)}`);
             continue;
           }
-          embeds.push({ url: payload.link, resolver, lang, servername: embed.servername });
+          embeds.push({ url: decryptedUrl, resolver, lang, servername: embed.servername });
         }
         return embeds;
       };
@@ -744,6 +753,27 @@ function getStreams(tmdbId, mediaType, season, episode) {
         return [];
       }
       console.log(`[Embed69] ${dataLink.length} idiomas disponibles: ${dataLink.map((d) => d.video_language).join(", ")}`);
+      let aesKey;
+      try {
+        const challenge = html.match(/POW_CHALLENGE = '([^']+)'/)[1];
+        const difficulty = parseInt(html.match(/POW_DIFFICULTY = (\d+)/)[1]);
+        const salt = html.match(/POW_SALT = '([^']+)'/)[1];
+        const prefix = "0".repeat(difficulty);
+        let nonce = 0;
+        console.log(`[Embed69] Resolviendo PoW con CryptoJS (Dificultad: ${difficulty})...`);
+        while (true) {
+          const hashHex = import_crypto_js2.default.SHA256(challenge + nonce).toString(import_crypto_js2.default.enc.Hex);
+          if (hashHex.startsWith(prefix)) {
+            aesKey = import_crypto_js2.default.SHA256(challenge + nonce + salt);
+            console.log(`[Embed69] PoW Resuelto. Nonce: ${nonce}`);
+            break;
+          }
+          nonce++;
+        }
+      } catch (powError) {
+        console.log(`[Embed69] Error al resolver el PoW: ${powError.message}`);
+        return [];
+      }
       const byLang = {};
       for (const section of dataLink) {
         byLang[section.video_language] = section;
