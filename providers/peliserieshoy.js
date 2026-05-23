@@ -1,110 +1,104 @@
-var S = Object.defineProperty, b = Object.defineProperties, E = Object.getOwnPropertyDescriptor, C = Object.getOwnPropertyDescriptors, D = Object.getOwnPropertyNames, _ = Object.getOwnPropertySymbols;
-var A = Object.prototype.hasOwnProperty, M = Object.prototype.propertyIsEnumerable;
-var U = (t, e, s) => e in t ? S(t, e, { enumerable: true, configurable: true, writable: true, value: s }) : t[e] = s, y = (t, e) => {
+var m = Object.defineProperty, E = Object.defineProperties, M = Object.getOwnPropertyDescriptor, B = Object.getOwnPropertyDescriptors, C = Object.getOwnPropertyNames, _ = Object.getOwnPropertySymbols;
+var L = Object.prototype.hasOwnProperty, D = Object.prototype.propertyIsEnumerable;
+var A = (t, e, s) => e in t ? m(t, e, { enumerable: true, configurable: true, writable: true, value: s }) : t[e] = s, y = (t, e) => {
   for (var s in e || (e = {}))
-    A.call(e, s) && U(t, s, e[s]);
+    L.call(e, s) && A(t, s, e[s]);
   if (_)
     for (var s of _(e))
-      M.call(e, s) && U(t, s, e[s]);
+      D.call(e, s) && A(t, s, e[s]);
   return t;
-}, P = (t, e) => b(t, C(e));
-var B = (t, e) => {
+}, P = (t, e) => E(t, B(e));
+var I = (t, e) => {
   for (var s in e)
-    S(t, s, { get: e[s], enumerable: true });
-}, I = (t, e, s, h) => {
+    m(t, s, { get: e[s], enumerable: true });
+}, N = (t, e, s, l) => {
   if (e && typeof e == "object" || typeof e == "function")
-    for (let r of D(e))
-      !A.call(t, r) && r !== s && S(t, r, { get: () => e[r], enumerable: !(h = E(e, r)) || h.enumerable });
+    for (let o of C(e))
+      !L.call(t, o) && o !== s && m(t, o, { get: () => e[o], enumerable: !(l = M(e, o)) || l.enumerable });
   return t;
 };
-var N = (t) => I(S({}, "__esModule", { value: true }), t);
-var v = (t, e, s) => new Promise((h, r) => {
-  var p = (n) => {
+var O = (t) => N(m({}, "__esModule", { value: true }), t);
+var w = (t, e, s) => new Promise((l, o) => {
+  var c = (n) => {
     try {
-      i(s.next(n));
-    } catch (m) {
-      r(m);
+      a(s.next(n));
+    } catch (f) {
+      o(f);
     }
-  }, g = (n) => {
+  }, u = (n) => {
     try {
-      i(s.throw(n));
-    } catch (m) {
-      r(m);
+      a(s.throw(n));
+    } catch (f) {
+      o(f);
     }
-  }, i = (n) => n.done ? h(n.value) : Promise.resolve(n.value).then(p, g);
-  i((s = s.apply(t, e)).next());
+  }, a = (n) => n.done ? l(n.value) : Promise.resolve(n.value).then(c, u);
+  a((s = s.apply(t, e)).next());
 });
-var K = {};
-B(K, { getStreams: () => z });
-module.exports = N(K);
-var L = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", c = "https://player.pelisserieshoy.com", H = "439c478a771f35c05022f9feabcca01c", O = ["LAT", "ESP", "SUB"];
+var z = {};
+I(z, { getStreams: () => K });
+module.exports = O(z);
+var k = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", d = "https://player.pelisserieshoy.com", b = "439c478a771f35c05022f9feabcca01c", W = ["LAT", "ESP", "SUB"];
 function j(t, e) {
-  return v(this, null, function* () {
-    let s = e === "movie" ? `https://api.themoviedb.org/3/movie/${t}/external_ids?api_key=${H}` : `https://api.themoviedb.org/3/tv/${t}/external_ids?api_key=${H}`;
-    return (yield fetch(s, { headers: { "User-Agent": L } }).then((r) => r.json())).imdb_id || null;
+  return w(this, null, function* () {
+    let s = e === "movie" ? `https://api.themoviedb.org/3/movie/${t}/external_ids?api_key=${b}` : `https://api.themoviedb.org/3/tv/${t}/external_ids?api_key=${b}`;
+    return (yield fetch(s, { headers: { "User-Agent": k } }).then((o) => o.json())).imdb_id || null;
   });
 }
-function z(t, e, s, h) {
-  return v(this, null, function* () {
+function K(t, e, s, l) {
+  return w(this, null, function* () {
     if (!t || !e)
       return [];
-    let r = Date.now();
+    let o = Date.now();
     console.log(`[PelisSeriesHoy] Buscando: TMDB ${t} (${e})`);
     try {
-      let T2 = function(o, u, f) {
-        return v(this, null, function* () {
+      let H2 = function(r, h, $) {
+        return w(this, null, function* () {
           try {
-            let a = yield fetch(`${c}/s.php`, { method: "POST", headers: P(y({}, n), { Referer: i }), body: new URLSearchParams({ a: "2", v: u, tok: $ }).toString() }).then((l) => l.json());
-            if (a.u || a.sig) {
-              let l = a.u ? `${c}/p.php?url=${encodeURIComponent(a.u)}&sig=${encodeURIComponent(a.sig || "")}` : `${c}/p.php?v=${u}&tok=${$}`, d = o.replace(/[^a-zA-Z0-9 ]/g, "").trim() || a.src || "Server";
-              return { name: "PelisSeriesHoy", title: `1080p \xB7 ${f} \xB7 ${d}`, url: l, quality: "1080p", headers: { Referer: c } };
-            }
-            if (a.type === "mp4" && a.u) {
-              let l = o.replace(/[^a-zA-Z0-9 ]/g, "").trim() || "Directo";
-              return { name: "PelisSeriesHoy", title: `1080p \xB7 ${f} \xB7 ${l}`, url: a.u, quality: "1080p", headers: { Referer: c } };
-            }
-          } catch (a) {
-            console.log(`[PelisSeriesHoy] Error en resolver ${o}: ${a.message}`);
+            let i = yield fetch(`${d}/s.php`, { method: "POST", headers: P(y({}, n), { Referer: a }), body: new URLSearchParams({ a: "2", v: h, tok: S }).toString() }).then((x) => x.json()), p = "";
+            i.u && i.u.startsWith("http") ? p = `${d}/p.php?url=${encodeURIComponent(i.u)}&sig=${encodeURIComponent(i.sig || "")}` : p = `${d}/p.php?v=${h}&tok=${S}`;
+            let g = r.replace(/[^a-zA-Z0-9 ]/g, "").trim() || i.src || "Server";
+            return { name: "PelisSeriesHoy", title: `1080p \xB7 ${$} \xB7 ${g}`, url: p, quality: "1080p", headers: { Referer: "https://sololatino.net/", "User-Agent": k } };
+          } catch (i) {
+            return console.log(`[PelisSeriesHoy] Error: ${i.message}`), null;
           }
-          return null;
         });
       };
-      var T = T2;
-      let p = yield j(t, e);
-      if (!p)
+      var H = H2;
+      let c = yield j(t, e);
+      if (!c)
         return [];
-      let g = p;
+      let u = c;
       if (e === "tv") {
-        let o = String(h).padStart(2, "0");
-        g = `${p}-${parseInt(s)}x${o}`;
+        let r = String(l).padStart(2, "0");
+        u = `${c}-${parseInt(s)}x${r}`;
       }
-      let i = `${c}/f/${g}`;
-      console.log(`[PelisSeriesHoy] Fetching HTML: ${i}`);
-      let n = { "User-Agent": L, Referer: "https://sololatino.net/", "Content-Type": "application/x-www-form-urlencoded" }, k = (yield fetch(i, { headers: n }).then((o) => o.text())).match(/const _t\s*=\s*'([^']+)'/);
-      if (!k)
+      let a = `${d}/f/${u}`;
+      console.log(`[PelisSeriesHoy] Fetching HTML: ${a}`);
+      let n = { "User-Agent": k, Referer: "https://sololatino.net/", "Content-Type": "application/x-www-form-urlencoded" }, U = (yield fetch(a, { headers: n }).then((r) => r.text())).match(/const _t\s*=\s*'([^']+)'/);
+      if (!U)
         return console.log("[PelisSeriesHoy] No se encontr\xF3 el token de sesi\xF3n (_t)"), [];
-      let $ = k[1];
-      yield fetch(`${c}/s.php`, { method: "POST", headers: P(y({}, n), { Referer: i }), body: new URLSearchParams({ a: "click", tok: $ }).toString() });
-      let w = yield fetch(`${c}/s.php`, { method: "POST", headers: P(y({}, n), { Referer: i }), body: new URLSearchParams({ a: "1", tok: $ }).toString() }).then((o) => o.json());
-      if (!w || !w.langs_s)
+      let S = U[1];
+      yield fetch(`${d}/s.php`, { method: "POST", headers: P(y({}, n), { Referer: a }), body: new URLSearchParams({ a: "click", tok: S }).toString() });
+      let v = yield fetch(`${d}/s.php`, { method: "POST", headers: P(y({}, n), { Referer: a }), body: new URLSearchParams({ a: "1", tok: S }).toString() }).then((r) => r.json());
+      if (!v || !v.langs_s)
         return [];
       let R = [];
-      for (let o of O) {
-        let u = w.langs_s[o];
-        if (!u || u.length === 0)
+      for (let r of W) {
+        let h = v.langs_s[r];
+        if (!h || h.length === 0)
           continue;
-        let f = o === "LAT" ? "Latino" : o === "ESP" ? "Espa\xF1ol" : "Subtitulado";
-        console.log(`[PelisSeriesHoy] Resolviendo ${u.length} servidores en ${f}...`);
-        let l = (yield Promise.all(u.map((d) => T2(d[0], d[1], f)))).filter((d) => d !== null);
-        if (l.length > 0) {
-          R.push(...l);
+        let $ = r === "LAT" ? "Latino" : r === "ESP" ? "Espa\xF1ol" : "Subtitulado";
+        console.log(`[PelisSeriesHoy] Resolviendo ${h.length} servidores en ${$}...`);
+        let p = (yield Promise.all(h.map((g) => H2(g[0], g[1], $)))).filter((g) => g !== null);
+        if (p.length > 0) {
+          R.push(...p);
           break;
         }
       }
-      let x = ((Date.now() - r) / 1e3).toFixed(2);
-      return console.log(`[PelisSeriesHoy] \u2713 ${R.length} streams en ${x}s`), R;
-    } catch (p) {
-      return console.error(`[PelisSeriesHoy] Error: ${p.message}`), [];
+      let T = ((Date.now() - o) / 1e3).toFixed(2);
+      return console.log(`[PelisSeriesHoy] \u2713 ${R.length} streams en ${T}s`), R;
+    } catch (c) {
+      return console.error(`[PelisSeriesHoy] Error: ${c.message}`), [];
     }
   });
 }
