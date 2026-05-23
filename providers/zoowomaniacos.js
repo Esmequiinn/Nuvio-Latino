@@ -1,281 +1,150 @@
-var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
+var p = Object.defineProperty, E = Object.defineProperties, U = Object.getOwnPropertyDescriptor, L = Object.getOwnPropertyDescriptors, S = Object.getOwnPropertyNames, y = Object.getOwnPropertySymbols;
+var R = Object.prototype.hasOwnProperty, b = Object.prototype.propertyIsEnumerable;
+var v = (t, e, o) => e in t ? p(t, e, { enumerable: true, configurable: true, writable: true, value: o }) : t[e] = o, $ = (t, e) => {
+  for (var o in e || (e = {}))
+    R.call(e, o) && v(t, o, e[o]);
+  if (y)
+    for (var o of y(e))
+      b.call(e, o) && v(t, o, e[o]);
+  return t;
+}, A = (t, e) => E(t, L(e));
+var x = (t, e) => {
+  for (var o in e)
+    p(t, o, { get: e[o], enumerable: true });
+}, D = (t, e, o, s) => {
+  if (e && typeof e == "object" || typeof e == "function")
+    for (let r of S(e))
+      !R.call(t, r) && r !== o && p(t, r, { get: () => e[r], enumerable: !(s = U(e, r)) || s.enumerable });
+  return t;
+};
+var O = (t) => D(p({}, "__esModule", { value: true }), t);
+var g = (t, e, o) => new Promise((s, r) => {
+  var l = (i) => {
+    try {
+      a(o.next(i));
+    } catch (c) {
+      r(c);
     }
-  return a;
-};
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var __async = (__this, __arguments, generator) => {
-  return new Promise((resolve2, reject) => {
-    var fulfilled = (value) => {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    var rejected = (value) => {
-      try {
-        step(generator.throw(value));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    var step = (x) => x.done ? resolve2(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
-    step((generator = generator.apply(__this, __arguments)).next());
-  });
-};
-var zoowomaniacos_exports = {};
-__export(zoowomaniacos_exports, {
-  getStreams: () => getStreams
+  }, n = (i) => {
+    try {
+      a(o.throw(i));
+    } catch (c) {
+      r(c);
+    }
+  }, a = (i) => i.done ? s(i.value) : Promise.resolve(i.value).then(l, n);
+  a((o = o.apply(t, e)).next());
 });
-module.exports = __toCommonJS(zoowomaniacos_exports);
-var UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function resolve(embedUrl) {
-  return __async(this, null, function* () {
+var B = {};
+x(B, { getStreams: () => P });
+module.exports = O(B);
+var T = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function k(t) {
+  return g(this, null, function* () {
     try {
-      console.log(`[OkRu] Resolviendo: ${embedUrl}`);
-      const raw = yield fetch(embedUrl, {
-        headers: {
-          "User-Agent": UA,
-          "Accept": "text/html",
-          "Referer": "https://ok.ru/"
-        },
-        redirect: "follow"
-      }).then((r) => r.text());
-      if (raw.includes("copyrightsRestricted") || raw.includes("COPYRIGHTS_RESTRICTED") || raw.includes("LIMITED_ACCESS") || raw.includes("notFound") || !raw.includes("urls")) {
-        console.log("[OkRu] Video no disponible o eliminado");
-        return null;
-      }
-      const data = raw.replace(/\\&quot;/g, '"').replace(/\\u0026/g, "&").replace(/\\/g, "");
-      const matches = [...data.matchAll(/"name":"([^"]+)","url":"([^"]+)"/g)];
-      const QUALITY_ORDER = ["full", "hd", "sd", "low", "lowest"];
-      const videos = matches.map((m) => ({ type: m[1], url: m[2] })).filter((v) => !v.type.toLowerCase().includes("mobile") && v.url.startsWith("http"));
-      if (videos.length === 0) {
-        console.log("[OkRu] No se encontraron URLs");
-        return null;
-      }
-      const sorted = videos.sort((a, b) => {
-        const ai = QUALITY_ORDER.findIndex((q) => a.type.toLowerCase().includes(q));
-        const bi = QUALITY_ORDER.findIndex((q) => b.type.toLowerCase().includes(q));
-        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-      });
-      const best = sorted[0];
-      console.log(`[OkRu] URL encontrada (${best.type}): ${best.url.substring(0, 80)}...`);
-      const QUALITY_MAP = { full: "1080p", hd: "720p", sd: "480p", low: "360p", lowest: "240p" };
-      return {
-        url: best.url,
-        quality: QUALITY_MAP[best.type] || best.type,
-        headers: { "User-Agent": UA, "Referer": "https://ok.ru/" }
-      };
+      console.log(`[OkRu] Resolviendo: ${t}`);
+      let e = yield fetch(t, { headers: { "User-Agent": T, Accept: "text/html", Referer: "https://ok.ru/" }, redirect: "follow" }).then((c) => c.text());
+      if (e.includes("copyrightsRestricted") || e.includes("COPYRIGHTS_RESTRICTED") || e.includes("LIMITED_ACCESS") || e.includes("notFound") || !e.includes("urls"))
+        return console.log("[OkRu] Video no disponible o eliminado"), null;
+      let s = [...e.replace(/\\&quot;/g, '"').replace(/\\u0026/g, "&").replace(/\\/g, "").matchAll(/"name":"([^"]+)","url":"([^"]+)"/g)], r = ["full", "hd", "sd", "low", "lowest"], l = s.map((c) => ({ type: c[1], url: c[2] })).filter((c) => !c.type.toLowerCase().includes("mobile") && c.url.startsWith("http"));
+      if (l.length === 0)
+        return console.log("[OkRu] No se encontraron URLs"), null;
+      let a = l.sort((c, h) => {
+        let u = r.findIndex((f) => c.type.toLowerCase().includes(f)), w = r.findIndex((f) => h.type.toLowerCase().includes(f));
+        return (u === -1 ? 99 : u) - (w === -1 ? 99 : w);
+      })[0];
+      console.log(`[OkRu] URL encontrada (${a.type}): ${a.url.substring(0, 80)}...`);
+      let i = { full: "1080p", hd: "720p", sd: "480p", low: "360p", lowest: "240p" };
+      return { url: a.url, quality: i[a.type] || a.type, headers: { "User-Agent": T, Referer: "https://ok.ru/" } };
     } catch (e) {
-      console.log(`[OkRu] Error: ${e.message}`);
-      return null;
+      return console.log(`[OkRu] Error: ${e.message}`), null;
     }
   });
 }
-var TMDB_API_KEY = "439c478a771f35c05022f9feabcca01c";
-var BASE_URL = "https://proyectox.yoyatengoabuela.com";
-var UA2 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-var HEADERS = {
-  "User-Agent": UA2,
-  "Accept": "application/json, text/javascript, */*",
-  "Connection": "keep-alive",
-  "Referer": BASE_URL + "/",
-  "Origin": BASE_URL,
-  "X-Requested-With": "XMLHttpRequest"
-};
-var OKRU_BLACKLIST = ["332656282246", "1683045747235"];
-function getTmdbData(tmdbId, mediaType) {
-  return __async(this, null, function* () {
-    const attempts = [
-      { lang: "es-MX", name: "Latino" },
-      { lang: "en-US", name: "Ingl\xE9s" }
-    ];
-    for (const { lang, name } of attempts) {
+var Z = "439c478a771f35c05022f9feabcca01c", d = "https://proyectox.yoyatengoabuela.com", m = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", C = { "User-Agent": m, Accept: "application/json, text/javascript, */*", Connection: "keep-alive", Referer: d + "/", Origin: d, "X-Requested-With": "XMLHttpRequest" }, M = ["332656282246", "1683045747235"];
+function _(t, e) {
+  return g(this, null, function* () {
+    let o = [{ lang: "es-MX", name: "Latino" }, { lang: "en-US", name: "Ingl\xE9s" }];
+    for (let { lang: s, name: r } of o)
       try {
-        const url = `https://api.themoviedb.org/3/${mediaType}/${tmdbId}?api_key=${TMDB_API_KEY}&language=${lang}`;
-        const data = yield fetch(url, { headers: { "User-Agent": UA2 } }).then((r) => r.json());
-        const title = mediaType === "movie" ? data.title : data.name;
-        const originalTitle = mediaType === "movie" ? data.original_title : data.original_name;
-        if (!title)
+        let l = `https://api.themoviedb.org/3/${e}/${t}?api_key=${Z}&language=${s}`, n = yield fetch(l, { headers: { "User-Agent": m } }).then((c) => c.json()), a = e === "movie" ? n.title : n.name, i = e === "movie" ? n.original_title : n.original_name;
+        if (!a || s === "es-MX" && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(a))
           continue;
-        if (lang === "es-MX" && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(title))
-          continue;
-        console.log(`[Zoowomaniacos] TMDB (${name}): "${title}"`);
-        return { title, originalTitle, year: (data.release_date || "").substring(0, 4) };
-      } catch (e) {
-        console.log(`[Zoowomaniacos] Error TMDB ${name}: ${e.message}`);
+        return console.log(`[Zoowomaniacos] TMDB (${r}): "${a}"`), { title: a, originalTitle: i, year: (n.release_date || "").substring(0, 4) };
+      } catch (l) {
+        console.log(`[Zoowomaniacos] Error TMDB ${r}: ${l.message}`);
       }
-    }
     return null;
   });
 }
-function searchMovie(query) {
-  return __async(this, null, function* () {
+function q(t) {
+  return g(this, null, function* () {
     try {
-      const params = new URLSearchParams({
-        "start": "0",
-        "length": "10",
-        "metodo": "ObtenerListaTotal",
-        "search[value]": query,
-        "searchPanes[a3][0]": "",
-        "searchPanes[a4][0]": "",
-        "searchPanes[a5][0]": "",
-        "searchPanes[a6][0]": ""
-      }).toString();
-      const data = yield fetch(`${BASE_URL}/alternativo3/server.php`, {
-        method: "POST",
-        headers: __spreadProps(__spreadValues({}, HEADERS), {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "Content-Length": params.length.toString()
-        }),
-        body: params
-      }).then((r) => r.json());
-      return (data == null ? void 0 : data.data) || [];
+      let e = new URLSearchParams({ start: "0", length: "10", metodo: "ObtenerListaTotal", "search[value]": t, "searchPanes[a3][0]": "", "searchPanes[a4][0]": "", "searchPanes[a5][0]": "", "searchPanes[a6][0]": "" }).toString(), o = yield fetch(`${d}/alternativo3/server.php`, { method: "POST", headers: A($({}, C), { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "Content-Length": e.length.toString() }), body: e }).then((s) => s.json());
+      return (o == null ? void 0 : o.data) || [];
     } catch (e) {
-      console.log(`[Zoowomaniacos] Error b\xFAsqueda: ${e.message}`);
-      return [];
+      return console.log(`[Zoowomaniacos] Error b\xFAsqueda: ${e.message}`), [];
     }
   });
 }
-function selectBestResult(results, tmdbInfo) {
-  if (results.length === 0)
+function W(t, e) {
+  if (t.length === 0)
     return null;
-  if (results.length === 1)
-    return results[0];
-  const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-  const targetTitle = normalize(tmdbInfo.title);
-  const targetOriginal = tmdbInfo.originalTitle ? normalize(tmdbInfo.originalTitle) : "";
-  const scored = results.map((r) => {
-    const rTitle = normalize((r.a2 || "").split("-")[0].trim());
-    let score = 0;
-    if (rTitle === targetTitle || rTitle === targetOriginal)
-      score += 3;
-    else if (rTitle.includes(targetTitle) || targetTitle.includes(rTitle))
-      score += 1.5;
-    if (tmdbInfo.year && r.a4 === tmdbInfo.year)
-      score += 1;
-    return { r, score };
+  if (t.length === 1)
+    return t[0];
+  let o = (n) => n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim(), s = o(e.title), r = e.originalTitle ? o(e.originalTitle) : "", l = t.map((n) => {
+    let a = o((n.a2 || "").split("-")[0].trim()), i = 0;
+    return a === s || a === r ? i += 3 : (a.includes(s) || s.includes(a)) && (i += 1.5), e.year && n.a4 === e.year && (i += 1), { r: n, score: i };
   });
-  scored.sort((a, b) => b.score - a.score);
-  return scored[0].r;
+  return l.sort((n, a) => a.score - n.score), l[0].r;
 }
-function getEmbeds(id) {
-  return __async(this, null, function* () {
+function F(t) {
+  return g(this, null, function* () {
     try {
-      const html = yield fetch(`${BASE_URL}/testplayer.php?id=${id}`, {
-        headers: { "User-Agent": UA2, "Accept": "text/html", "Referer": BASE_URL + "/" }
-      }).then((r) => r.text());
-      const matches = [...html.matchAll(/src="(https?:\/\/[^"]+)"/g)];
-      const urls = [...new Set(matches.map((m) => m[1]))];
-      const okru = urls.filter((url) => {
-        if (!url.includes("ok.ru/videoembed/"))
+      let o = [...(yield fetch(`${d}/testplayer.php?id=${t}`, { headers: { "User-Agent": m, Accept: "text/html", Referer: d + "/" } }).then((n) => n.text())).matchAll(/src="(https?:\/\/[^"]+)"/g)], s = [...new Set(o.map((n) => n[1]))], r = s.filter((n) => {
+        if (!n.includes("ok.ru/videoembed/"))
           return false;
-        const okId = url.split("/").pop();
-        return !OKRU_BLACKLIST.includes(okId);
-      });
-      const archive = urls.filter(
-        (url) => url.includes("archive.org") && (url.endsWith(".mp4") || url.endsWith(".mkv") || url.endsWith(".avi"))
-      );
-      return { okru, archive };
+        let a = n.split("/").pop();
+        return !M.includes(a);
+      }), l = s.filter((n) => n.includes("archive.org") && (n.endsWith(".mp4") || n.endsWith(".mkv") || n.endsWith(".avi")));
+      return { okru: r, archive: l };
     } catch (e) {
-      console.log(`[Zoowomaniacos] Error player: ${e.message}`);
-      return { okru: [], archive: [] };
+      return console.log(`[Zoowomaniacos] Error player: ${e.message}`), { okru: [], archive: [] };
     }
   });
 }
-function getStreams(tmdbId, mediaType) {
-  return __async(this, null, function* () {
-    if (!tmdbId || mediaType !== "movie")
+function P(t, e) {
+  return g(this, null, function* () {
+    if (!t || e !== "movie")
       return [];
-    const startTime = Date.now();
-    console.log(`[Zoowomaniacos] Buscando: TMDB ${tmdbId}`);
+    let o = Date.now();
+    console.log(`[Zoowomaniacos] Buscando: TMDB ${t}`);
     try {
-      const tmdbInfo = yield getTmdbData(tmdbId, mediaType);
-      if (!tmdbInfo)
+      let s = yield _(t, e);
+      if (!s)
         return [];
-      const queries = [tmdbInfo.title];
-      if (tmdbInfo.originalTitle && tmdbInfo.originalTitle !== tmdbInfo.title) {
-        queries.push(tmdbInfo.originalTitle);
-      }
-      let selected = null;
-      for (const q of queries) {
-        const results = yield searchMovie(q);
-        if (results.length > 0) {
-          selected = selectBestResult(results, tmdbInfo);
-          if (selected) {
-            console.log(`[Zoowomaniacos] \u2713 Encontrado: "${selected.a2}" (${selected.a4}) id:${selected.a1}`);
-            break;
-          }
+      let r = [s.title];
+      s.originalTitle && s.originalTitle !== s.title && r.push(s.originalTitle);
+      let l = null;
+      for (let h of r) {
+        let u = yield q(h);
+        if (u.length > 0 && (l = W(u, s), l)) {
+          console.log(`[Zoowomaniacos] \u2713 Encontrado: "${l.a2}" (${l.a4}) id:${l.a1}`);
+          break;
         }
       }
-      if (!selected) {
-        console.log("[Zoowomaniacos] No encontrado");
-        return [];
-      }
-      const { okru: embedUrls, archive: archiveUrls } = yield getEmbeds(selected.a1);
-      if (embedUrls.length === 0 && archiveUrls.length === 0) {
-        console.log("[Zoowomaniacos] No hay embeds v\xE1lidos");
-        return [];
-      }
-      const streams = [];
-      if (embedUrls.length > 0) {
-        console.log(`[Zoowomaniacos] Resolviendo ${embedUrls.length} embeds ok.ru...`);
-        const results = yield Promise.allSettled(embedUrls.map((url) => resolve(url)));
-        results.filter((r) => r.status === "fulfilled" && r.value).forEach((r) => streams.push({
-          name: "Zoowomaniacos",
-          title: `${r.value.quality} \xB7 OkRu`,
-          url: r.value.url,
-          quality: r.value.quality,
-          headers: r.value.headers || {}
-        }));
-      }
-      for (const url of archiveUrls) {
-        console.log(`[Zoowomaniacos] Archive.org directo: ${url.substring(0, 60)}...`);
-        streams.push({
-          name: "Zoowomaniacos",
-          title: "SD \xB7 Archive.org",
-          url,
-          quality: "SD",
-          headers: { "User-Agent": UA2 }
-        });
-      }
-      const elapsed = ((Date.now() - startTime) / 1e3).toFixed(2);
-      console.log(`[Zoowomaniacos] \u2713 ${streams.length} streams en ${elapsed}s`);
-      return streams;
-    } catch (e) {
-      console.log(`[Zoowomaniacos] Error: ${e.message}`);
-      return [];
+      if (!l)
+        return console.log("[Zoowomaniacos] No encontrado"), [];
+      let { okru: n, archive: a } = yield F(l.a1);
+      if (n.length === 0 && a.length === 0)
+        return console.log("[Zoowomaniacos] No hay embeds v\xE1lidos"), [];
+      let i = [];
+      n.length > 0 && (console.log(`[Zoowomaniacos] Resolviendo ${n.length} embeds ok.ru...`), (yield Promise.allSettled(n.map((u) => k(u)))).filter((u) => u.status === "fulfilled" && u.value).forEach((u) => i.push({ name: "Zoowomaniacos", title: `${u.value.quality} \xB7 OkRu`, url: u.value.url, quality: u.value.quality, headers: u.value.headers || {} })));
+      for (let h of a)
+        console.log(`[Zoowomaniacos] Archive.org directo: ${h.substring(0, 60)}...`), i.push({ name: "Zoowomaniacos", title: "SD \xB7 Archive.org", url: h, quality: "SD", headers: { "User-Agent": m } });
+      let c = ((Date.now() - o) / 1e3).toFixed(2);
+      return console.log(`[Zoowomaniacos] \u2713 ${i.length} streams en ${c}s`), i;
+    } catch (s) {
+      return console.log(`[Zoowomaniacos] Error: ${s.message}`), [];
     }
   });
 }
-
-

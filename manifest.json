@@ -3,17 +3,6 @@
   "version": "1.3.0",
   "scrapers": [
     {
-      "id": "lamovie",
-      "name": "LaMovie",
-      "description": "Streams en Latino/Español desde LaMovie. Vimeos, GoodStream, StreamWish, VOE y Filemoon.",
-      "version": "1.0.0",
-      "author": "KennethJYS",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/lamovie.js",
-      "enabled": true,
-      "contentLanguage": ["es"]
-    },
-    {
       "id": "cinecalidad",
       "name": "CineCalidad",
       "description": "Películas en Latino desde CineCalidad. Vimeos, VOE, Filemoon, StreamWish.",
@@ -27,7 +16,7 @@
     {
       "id": "embed69",
       "name": "Embed69",
-      "description": "Streams en Latino/Español/Subtitulado desde Embed69. StreamWish, VOE y Filemoon.",
+      "description": "Streams en Latino/Español/Subtitulado desde Embed69. StreamWish, VOE.",
       "version": "1.0.0",
       "author": "KennethJYS",
       "supportedTypes": ["movie", "tv"],
@@ -49,7 +38,7 @@
     {
       "id": "xupalace",
       "name": "Xupalace",
-      "description": "Streams en Latino desde Xupalace. StreamWish, VOE, Filemoon, Vidhide.",
+      "description": "Streams en Latino desde Xupalace. StreamWish, VOE, Vidhide.",
       "version": "1.0.0",
       "author": "KennethJYS",
       "supportedTypes": ["movie", "tv"],

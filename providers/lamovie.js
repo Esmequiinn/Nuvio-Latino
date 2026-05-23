@@ -1,460 +1,433 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
+var y = Object.defineProperty;
+var D = Object.getOwnPropertyDescriptor;
+var P = Object.getOwnPropertyNames, N = Object.getOwnPropertySymbols;
+var O = Object.prototype.hasOwnProperty, F = Object.prototype.propertyIsEnumerable;
+var T = (t, e, n) => e in t ? y(t, e, { enumerable: true, configurable: true, writable: true, value: n }) : t[e] = n, $ = (t, e) => {
+  for (var n in e || (e = {}))
+    O.call(e, n) && T(t, n, e[n]);
+  if (N)
+    for (var n of N(e))
+      F.call(e, n) && T(t, n, e[n]);
+  return t;
 };
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+var j = (t, e) => {
+  for (var n in e)
+    y(t, n, { get: e[n], enumerable: true });
+}, B = (t, e, n, o) => {
+  if (e && typeof e == "object" || typeof e == "function")
+    for (let r of P(e))
+      !O.call(t, r) && r !== n && y(t, r, { get: () => e[r], enumerable: !(o = D(e, r)) || o.enumerable });
+  return t;
 };
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var __async = (__this, __arguments, generator) => {
-  return new Promise((resolve3, reject) => {
-    var fulfilled = (value) => {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    var rejected = (value) => {
-      try {
-        step(generator.throw(value));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    var step = (x) => x.done ? resolve3(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
-    step((generator = generator.apply(__this, __arguments)).next());
-  });
-};
-var lamovie_exports = {};
-__export(lamovie_exports, {
-  getStreams: () => getStreams
-});
-module.exports = __toCommonJS(lamovie_exports);
-var UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function normalizeResolution(width, height) {
-  if (width >= 3840 || height >= 2160)
-    return "4K";
-  if (width >= 1920 || height >= 1080)
-    return "1080p";
-  if (width >= 1280 || height >= 720)
-    return "720p";
-  if (width >= 854 || height >= 480)
-    return "480p";
-  return "360p";
-}
-function detectQuality(_0) {
-  return __async(this, arguments, function* (m3u8Url, headers = {}) {
+var G = (t) => B(y({}, "__esModule", { value: true }), t);
+var h = (t, e, n) => new Promise((o, r) => {
+  var c = (a) => {
     try {
-      const res = yield fetch(m3u8Url, {
-        headers: __spreadValues({ "User-Agent": UA }, headers),
-        redirect: "follow"
-      });
-      const data = yield res.text();
-      if (!data.includes("#EXT-X-STREAM-INF")) {
-        const match = m3u8Url.match(/[_-](\d{3,4})p/);
-        return match ? `${match[1]}p` : "1080p";
+      l(n.next(a));
+    } catch (i) {
+      r(i);
+    }
+  }, s = (a) => {
+    try {
+      l(n.throw(a));
+    } catch (i) {
+      r(i);
+    }
+  }, l = (a) => a.done ? o(a.value) : Promise.resolve(a.value).then(c, s);
+  l((n = n.apply(t, e)).next());
+});
+var we = {};
+j(we, { getStreams: () => me });
+module.exports = G(we);
+var K = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function X(t, e) {
+  return t >= 3840 || e >= 2160 ? "4K" : t >= 1920 || e >= 1080 ? "1080p" : t >= 1280 || e >= 720 ? "720p" : t >= 854 || e >= 480 ? "480p" : "360p";
+}
+function g(n) {
+  return h(this, arguments, function* (t, e = {}) {
+    try {
+      let r = yield (yield fetch(t, { headers: $({ "User-Agent": K }, e), redirect: "follow" })).text();
+      if (!r.includes("#EXT-X-STREAM-INF")) {
+        let a = t.match(/[_-](\d{3,4})p/);
+        return a ? `${a[1]}p` : "1080p";
       }
-      let bestWidth = 0;
-      let bestHeight = 0;
-      const lines = data.split("\n");
-      for (const line of lines) {
-        const m = line.match(/RESOLUTION=(\d+)x(\d+)/);
-        if (m) {
-          const w = parseInt(m[1]);
-          const h = parseInt(m[2]);
-          if (h > bestHeight) {
-            bestHeight = h;
-            bestWidth = w;
-          }
+      let c = 0, s = 0, l = r.split(`
+`);
+      for (let a of l) {
+        let i = a.match(/RESOLUTION=(\d+)x(\d+)/);
+        if (i) {
+          let u = parseInt(i[1]), f = parseInt(i[2]);
+          f > s && (s = f, c = u);
         }
       }
-      return bestHeight > 0 ? normalizeResolution(bestWidth, bestHeight) : "1080p";
-    } catch (e) {
+      return s > 0 ? X(c, s) : "1080p";
+    } catch (o) {
       return "1080p";
     }
   });
 }
-var UA2 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function resolve(embedUrl) {
-  return __async(this, null, function* () {
+var U = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function _(t) {
+  return h(this, null, function* () {
     try {
-      console.log(`[GoodStream] Resolviendo: ${embedUrl}`);
-      const response = yield fetch(embedUrl, {
-        headers: {
-          "User-Agent": UA2,
-          "Referer": "https://goodstream.one",
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-        },
-        redirect: "follow"
-      });
-      if (!response.ok)
-        throw new Error(`HTTP ${response.status}`);
-      const html = yield response.text();
-      const match = html.match(/file:\s*"([^"]+)"/);
-      if (!match) {
-        console.log('[GoodStream] No se encontr\xF3 patr\xF3n file:"..."');
-        return null;
-      }
-      const videoUrl = match[1];
-      const refererHeaders = { "Referer": embedUrl, "Origin": "https://goodstream.one", "User-Agent": UA2 };
-      const quality = yield detectQuality(videoUrl, refererHeaders);
-      console.log(`[GoodStream] URL encontrada (${quality}): ${videoUrl.substring(0, 80)}...`);
-      return { url: videoUrl, quality, headers: refererHeaders };
-    } catch (err) {
-      console.log(`[GoodStream] Error: ${err.message}`);
-      return null;
+      console.log(`[GoodStream] Resolviendo: ${t}`);
+      let e = yield fetch(t, { headers: { "User-Agent": U, Referer: "https://goodstream.one", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow" });
+      if (!e.ok)
+        throw new Error(`HTTP ${e.status}`);
+      let o = (yield e.text()).match(/file:\s*"([^"]+)"/);
+      if (!o)
+        return console.log('[GoodStream] No se encontr\xF3 patr\xF3n file:"..."'), null;
+      let r = o[1], c = { Referer: t, Origin: "https://goodstream.one", "User-Agent": U }, s = yield g(r, c);
+      return console.log(`[GoodStream] URL encontrada (${s}): ${r.substring(0, 80)}...`), { url: r, quality: s, headers: c };
+    } catch (e) {
+      return console.log(`[GoodStream] Error: ${e.message}`), null;
     }
   });
 }
-var UA3 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function resolve2(embedUrl) {
-  return __async(this, null, function* () {
+var Q = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function k(t) {
+  try {
+    return typeof atob != "undefined" ? atob(t) : Buffer.from(t, "base64").toString("utf8");
+  } catch (e) {
+    return null;
+  }
+}
+function J(t, e) {
+  try {
+    let o = e.replace(/^\[|\]$/g, "").split("','").map((i) => i.replace(/^'+|'+$/g, "")).map((i) => i.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), r = "";
+    for (let i of t) {
+      let u = i.charCodeAt(0);
+      u > 64 && u < 91 ? u = (u - 52) % 26 + 65 : u > 96 && u < 123 && (u = (u - 84) % 26 + 97), r += String.fromCharCode(u);
+    }
+    for (let i of o)
+      r = r.replace(new RegExp(i, "g"), "_");
+    r = r.split("_").join("");
+    let c = k(r);
+    if (!c)
+      return null;
+    let s = "";
+    for (let i = 0; i < c.length; i++)
+      s += String.fromCharCode((c.charCodeAt(i) - 3 + 256) % 256);
+    let l = s.split("").reverse().join(""), a = k(l);
+    return a ? JSON.parse(a) : null;
+  } catch (n) {
+    return console.log("[VOE] voeDecode error:", n.message), null;
+  }
+}
+function S(n) {
+  return h(this, arguments, function* (t, e = {}) {
+    return yield fetch(t, { method: "GET", headers: $({ "User-Agent": Q, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, e), redirect: "follow" });
+  });
+}
+function H(t) {
+  return h(this, null, function* () {
     try {
-      console.log(`[Vimeos] Resolviendo: ${embedUrl}`);
-      const resp = yield fetch(embedUrl, {
-        headers: {
-          "User-Agent": UA3,
-          "Referer": "https://vimeos.net/",
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-        },
-        redirect: "follow"
-      });
-      if (!resp.ok)
-        throw new Error(`HTTP ${resp.status}`);
-      const data = yield resp.text();
-      const packMatch = data.match(
-        /eval\(function\(p,a,c,k,e,[dr]\)\{[\s\S]+?\}\('([\s\S]+?)',(\d+),(\d+),'([\s\S]+?)'\.split\('\|'\)/
-      );
-      if (packMatch) {
-        const payload = packMatch[1];
-        const radix = parseInt(packMatch[2]);
-        const symtab = packMatch[4].split("|");
-        const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const unbase = (str) => {
-          let result = 0;
-          for (let i = 0; i < str.length; i++) {
-            result = result * radix + chars.indexOf(str[i]);
-          }
-          return result;
-        };
-        const unpacked = payload.replace(/\b(\w+)\b/g, (match) => {
-          const idx = unbase(match);
-          return symtab[idx] && symtab[idx] !== "" ? symtab[idx] : match;
-        });
-        const m3u8Match = unpacked.match(/["']([^"']+\.m3u8[^"']*)['"]/i);
-        if (m3u8Match) {
-          const url = m3u8Match[1];
-          const refererHeaders = { "User-Agent": UA3, "Referer": "https://vimeos.net/" };
-          const quality = yield detectQuality(url, refererHeaders);
-          console.log(`[Vimeos] URL encontrada: ${url.substring(0, 80)}...`);
-          return { url, quality, headers: refererHeaders };
+      console.log(`[VOE] Resolviendo: ${t}`);
+      let e = yield S(t, { Referer: t });
+      if (!e.ok)
+        throw new Error(`HTTP ${e.status}`);
+      let n = yield e.text();
+      if (/permanentToken/i.test(n)) {
+        let a = n.match(/window\.location\.href\s*=\s*'([^']+)'/i);
+        if (a) {
+          console.log(`[VOE] Permanent token redirect -> ${a[1]}`);
+          let i = yield S(a[1], { Referer: t });
+          i.ok && (n = yield i.text());
         }
       }
-      console.log("[Vimeos] No se encontr\xF3 URL");
-      return null;
-    } catch (err) {
-      console.log(`[Vimeos] Error: ${err.message}`);
-      return null;
+      let o = n.match(/json">\s*\[\s*['"]([^'"]+)['"]\s*\]\s*<\/script>\s*<script[^>]*src=['"]([^'"]+)['"]/i);
+      if (o) {
+        let a = o[1], i = o[2].startsWith("http") ? o[2] : new URL(o[2], t).href;
+        console.log(`[VOE] Found encoded array + loader: ${i}`);
+        let u = yield S(i, { Referer: t }), f = u.ok ? yield u.text() : "", p = f.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || f.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
+        if (p) {
+          let d = J(a, p[1]);
+          if (d && (d.source || d.direct_access_url)) {
+            let m = d.source || d.direct_access_url, w = yield g(m, { Referer: t });
+            return console.log(`[VOE] URL encontrada: ${m.substring(0, 80)}...`), { url: m, quality: w, headers: { Referer: t } };
+          }
+        }
+      }
+      let r = /(?:mp4|hls)'\s*:\s*'([^']+)'/gi, c = /(?:mp4|hls)"\s*:\s*"([^"]+)"/gi, s = [], l;
+      for (; (l = r.exec(n)) !== null; )
+        s.push(l);
+      for (; (l = c.exec(n)) !== null; )
+        s.push(l);
+      for (let a of s) {
+        let i = a[1];
+        if (!i)
+          continue;
+        let u = i;
+        if (u.startsWith("aHR0"))
+          try {
+            u = atob(u);
+          } catch (f) {
+          }
+        return console.log(`[VOE] URL encontrada (fallback): ${u.substring(0, 80)}...`), { url: u, quality: yield g(u, { Referer: t }), headers: { Referer: t } };
+      }
+      return console.log("[VOE] No se encontr\xF3 URL"), null;
+    } catch (e) {
+      return console.log(`[VOE] Error: ${e.message}`), null;
     }
   });
 }
-var TMDB_API_KEY = "439c478a771f35c05022f9feabcca01c";
-var UA4 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-var HEADERS = { "User-Agent": UA4, "Accept": "application/json" };
-var BASE_URL = "https://la.movie";
-var ANIME_COUNTRIES = ["JP", "CN", "KR"];
-var GENRE_ANIMATION = 16;
-var RESOLVERS = {
-  "goodstream.one": resolve,
-  //'hlswish.com': resolveHlswish,
-  //'streamwish.com': resolveHlswish,
-  //'streamwish.to': resolveHlswish,
-  //'strwish.com': resolveHlswish,
-  //'voe.sx': resolveVoe,
-  //'filemoon.sx': resolveFilemoon,
-  //'filemoon.to': resolveFilemoon,
-  "vimeos.net": resolve2
-};
-var IGNORED_HOSTS = [];
-function httpGet(_0) {
-  return __async(this, arguments, function* (url, options = {}) {
-    const res = yield fetch(url, {
-      headers: __spreadValues({ "User-Agent": UA4 }, options.headers),
-      redirect: "follow"
-    });
-    if (!res.ok)
-      throw new Error(`HTTP ${res.status}`);
-    const contentType = res.headers.get("content-type") || "";
-    return contentType.includes("json") ? res.json() : res.text();
+var v = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function Y(t, e, n) {
+  let o = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", r = (c) => {
+    let s = 0;
+    for (let l = 0; l < c.length; l++) {
+      let a = o.indexOf(c[l]);
+      if (a === -1)
+        return NaN;
+      s = s * e + a;
+    }
+    return s;
+  };
+  return t.replace(/\b([0-9a-zA-Z]+)\b/g, (c) => {
+    let s = r(c);
+    return isNaN(s) || s >= n.length ? c : n[s] && n[s] !== "" ? n[s] : c;
   });
 }
-var normalizeQuality = (quality) => {
-  const str = quality.toString().toLowerCase();
-  const match = str.match(/(\d+)/);
-  if (match)
-    return `${match[1]}p`;
-  if (str.includes("4k") || str.includes("uhd"))
-    return "2160p";
-  if (str.includes("full") || str.includes("fhd"))
-    return "1080p";
-  if (str.includes("hd"))
-    return "720p";
-  return "SD";
-};
-var getServerName = (url) => {
-  if (url.includes("goodstream"))
-    return "GoodStream";
-  if (url.includes("hlswish") || url.includes("streamwish"))
-    return "StreamWish";
-  if (url.includes("voe.sx"))
-    return "VOE";
-  if (url.includes("filemoon"))
-    return "Filemoon";
-  if (url.includes("vimeos.net"))
-    return "Vimeos";
-  return "Online";
-};
-var getResolver = (url) => {
+function Z(t, e) {
+  let n = t.match(/\{[^{}]*"hls[234]"\s*:\s*"([^"]+)"[^{}]*\}/);
+  if (n)
+    try {
+      let r = n[0].replace(/(\w+)\s*:/g, '"$1":'), c = JSON.parse(r), s = c.hls4 || c.hls3 || c.hls2;
+      if (s)
+        return s.startsWith("/") ? e + s : s;
+    } catch (r) {
+      let c = n[0].match(/"hls[234]"\s*:\s*"([^"]+\.m3u8[^"]*)"/);
+      if (c) {
+        let s = c[1];
+        return s.startsWith("/") ? e + s : s;
+      }
+    }
+  let o = t.match(/["']([^"']{30,}\.m3u8[^"']*)['"]/i);
+  if (o) {
+    let r = o[1];
+    return r.startsWith("/") ? e + r : r;
+  }
+  return null;
+}
+var ee = { "hglink.to": "vibuxer.com" };
+function x(t) {
+  return h(this, null, function* () {
+    var e;
+    try {
+      let n = t;
+      for (let [i, u] of Object.entries(ee))
+        if (n.includes(i)) {
+          n = n.replace(i, u);
+          break;
+        }
+      let o = ((e = n.match(/^(https?:\/\/[^/]+)/)) == null ? void 0 : e[1]) || "https://hlswish.com";
+      console.log(`[HLSWish] Resolviendo: ${t}`), n !== t && console.log(`[HLSWish] \u2192 Mapped to: ${n}`);
+      let r = yield fetch(n, { headers: { "User-Agent": v, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
+      if (!r.ok)
+        throw new Error(`HTTP ${r.status}`);
+      let c = yield r.text(), s = c.match(/file\s*:\s*["']([^"']+)["']/i);
+      if (s) {
+        let i = s[1];
+        if (i.startsWith("/") && (i = o + i), i.includes("vibuxer.com/stream/")) {
+          console.log(`[HLSWish] Siguiendo redirect: ${i.substring(0, 80)}...`);
+          try {
+            let f = (yield fetch(i, { headers: { "User-Agent": v, Referer: o + "/" }, redirect: "follow" })).url;
+            f && f.includes(".m3u8") && (i = f);
+          } catch (u) {
+          }
+        }
+        return console.log(`[HLSWish] URL encontrada: ${i.substring(0, 80)}...`), { url: i, quality: "1080p", headers: { "User-Agent": v, Referer: o + "/" } };
+      }
+      let l = c.match(/eval\(function\(p,a,c,k,e,[a-z]\)\{[^}]+\}\s*\('([\s\S]+?)',\s*(\d+),\s*(\d+),\s*'([\s\S]+?)'\.split\('\|'\)/);
+      if (l) {
+        let i = Y(l[1], parseInt(l[2]), l[4].split("|")), u = Z(i, o);
+        if (u)
+          return console.log(`[HLSWish] URL encontrada: ${u.substring(0, 80)}...`), { url: u, quality: "1080p", headers: { "User-Agent": v, Referer: o + "/" } };
+      }
+      let a = c.match(/https?:\/\/[^"'\s\\]+\.m3u8[^"'\s\\]*/i);
+      return a ? (console.log(`[HLSWish] URL encontrada: ${a[0].substring(0, 80)}...`), { url: a[0], quality: "1080p", headers: { "User-Agent": v, Referer: o + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
+    } catch (n) {
+      return console.log(`[HLSWish] Error: ${n.message}`), null;
+    }
+  });
+}
+var q = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function I(t) {
+  return h(this, null, function* () {
+    try {
+      console.log(`[Vimeos] Resolviendo: ${t}`);
+      let e = yield fetch(t, { headers: { "User-Agent": q, Referer: "https://vimeos.net/", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow" });
+      if (!e.ok)
+        throw new Error(`HTTP ${e.status}`);
+      let o = (yield e.text()).match(/eval\(function\(p,a,c,k,e,[dr]\)\{[\s\S]+?\}\('([\s\S]+?)',(\d+),(\d+),'([\s\S]+?)'\.split\('\|'\)/);
+      if (o) {
+        let r = o[1], c = parseInt(o[2]), s = o[4].split("|"), l = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", a = (f) => {
+          let p = 0;
+          for (let d = 0; d < f.length; d++)
+            p = p * c + l.indexOf(f[d]);
+          return p;
+        }, u = r.replace(/\b(\w+)\b/g, (f) => {
+          let p = a(f);
+          return s[p] && s[p] !== "" ? s[p] : f;
+        }).match(/["']([^"']+\.m3u8[^"']*)['"]/i);
+        if (u) {
+          let f = u[1], p = { "User-Agent": q, Referer: "https://vimeos.net/" }, d = yield g(f, p);
+          return console.log(`[Vimeos] URL encontrada: ${f.substring(0, 80)}...`), { url: f, quality: d, headers: p };
+        }
+      }
+      return console.log("[Vimeos] No se encontr\xF3 URL"), null;
+    } catch (e) {
+      return console.log(`[Vimeos] Error: ${e.message}`), null;
+    }
+  });
+}
+var te = "439c478a771f35c05022f9feabcca01c", R = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", E = { "User-Agent": R, Accept: "application/json" }, M = "https://la.movie", ne = ["JP", "CN", "KR"], oe = 16, re = { "goodstream.one": _, "hlswish.com": x, "streamwish.com": x, "streamwish.to": x, "strwish.com": x, "voe.sx": H, "vimeos.net": I }, se = [];
+function A(n) {
+  return h(this, arguments, function* (t, e = {}) {
+    let o = yield fetch(t, { headers: $({ "User-Agent": R }, e.headers), redirect: "follow" });
+    if (!o.ok)
+      throw new Error(`HTTP ${o.status}`);
+    return (o.headers.get("content-type") || "").includes("json") ? o.json() : o.text();
+  });
+}
+var ie = (t) => {
+  let e = t.toString().toLowerCase(), n = e.match(/(\d+)/);
+  return n ? `${n[1]}p` : e.includes("4k") || e.includes("uhd") ? "2160p" : e.includes("full") || e.includes("fhd") ? "1080p" : e.includes("hd") ? "720p" : "SD";
+}, ce = (t) => t.includes("goodstream") ? "GoodStream" : t.includes("hlswish") || t.includes("streamwish") ? "StreamWish" : t.includes("voe.sx") ? "VOE" : t.includes("filemoon") ? "Filemoon" : t.includes("vimeos.net") ? "Vimeos" : "Online", ae = (t) => {
   try {
-    if (IGNORED_HOSTS.some((h) => url.includes(h)))
+    if (se.some((e) => t.includes(e)))
       return null;
-    for (const [pattern, resolver] of Object.entries(RESOLVERS)) {
-      if (url.includes(pattern))
-        return resolver;
-    }
+    for (let [e, n] of Object.entries(re))
+      if (t.includes(e))
+        return n;
   } catch (e) {
   }
   return null;
 };
-function buildSlug(title, year) {
-  const slug = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
-  return year ? `${slug}-${year}` : slug;
+function C(t, e) {
+  let n = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+  return e ? `${n}-${e}` : n;
 }
-function getCategories(mediaType, genres, originCountries) {
-  if (mediaType === "movie")
-    return ["peliculas"];
-  const isAnimation = (genres || []).includes(GENRE_ANIMATION);
-  if (!isAnimation)
-    return ["series"];
-  const isAnimeCountry = (originCountries || []).some((c) => ANIME_COUNTRIES.includes(c));
-  if (isAnimeCountry)
-    return ["animes"];
-  return ["animes", "series"];
+function le(t, e, n) {
+  return t === "movie" ? ["peliculas"] : (e || []).includes(oe) ? (n || []).some((c) => ne.includes(c)) ? ["animes"] : ["animes", "series"] : ["series"];
 }
-function getTmdbData(tmdbId, mediaType) {
-  return __async(this, null, function* () {
-    var _a;
-    const attempts = [
-      { lang: "es-MX", name: "Latino" },
-      { lang: "en-US", name: "Ingl\xE9s" }
-    ];
-    for (const { lang, name } of attempts) {
+function ue(t, e) {
+  return h(this, null, function* () {
+    var o;
+    let n = [{ lang: "es-MX", name: "Latino" }, { lang: "en-US", name: "Ingl\xE9s" }];
+    for (let { lang: r, name: c } of n)
       try {
-        const url = `https://api.themoviedb.org/3/${mediaType}/${tmdbId}?api_key=${TMDB_API_KEY}&language=${lang}`;
-        const data = yield httpGet(url, { headers: HEADERS });
-        const title = mediaType === "movie" ? data.title : data.name;
-        const originalTitle = mediaType === "movie" ? data.original_title : data.original_name;
-        if (lang === "es-MX" && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(title))
+        let s = `https://api.themoviedb.org/3/${e}/${t}?api_key=${te}&language=${r}`, l = yield A(s, { headers: E }), a = e === "movie" ? l.title : l.name, i = e === "movie" ? l.original_title : l.original_name;
+        if (r === "es-MX" && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(a))
           continue;
-        console.log(`[LaMovie] TMDB (${name}): "${title}"${title !== originalTitle ? ` | Original: "${originalTitle}"` : ""}`);
-        return {
-          title,
-          originalTitle,
-          year: (data.release_date || data.first_air_date || "").substring(0, 4),
-          genres: (data.genres || []).map((g) => g.id),
-          originCountries: data.origin_country || ((_a = data.production_countries) == null ? void 0 : _a.map((c) => c.iso_3166_1)) || []
-        };
-      } catch (e) {
-        console.log(`[LaMovie] Error TMDB ${name}: ${e.message}`);
+        return console.log(`[LaMovie] TMDB (${c}): "${a}"${a !== i ? ` | Original: "${i}"` : ""}`), { title: a, originalTitle: i, year: (l.release_date || l.first_air_date || "").substring(0, 4), genres: (l.genres || []).map((u) => u.id), originCountries: l.origin_country || ((o = l.production_countries) == null ? void 0 : o.map((u) => u.iso_3166_1)) || [] };
+      } catch (s) {
+        console.log(`[LaMovie] Error TMDB ${c}: ${s.message}`);
       }
-    }
     return null;
   });
 }
-var HTML_HEADERS = {
-  "User-Agent": UA4,
-  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-  "Accept-Language": "es-MX,es;q=0.9",
-  "Connection": "keep-alive",
-  "Upgrade-Insecure-Requests": "1"
-};
-function extractIdFromHtml(html) {
-  const match = html.match(/rel=['"]shortlink['"]\s+href=['"][^'"]*\?p=(\d+)['"]/);
-  return match ? match[1] : null;
+var fe = { "User-Agent": R, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9", Connection: "keep-alive", "Upgrade-Insecure-Requests": "1" };
+function pe(t) {
+  let e = t.match(/rel=['"]shortlink['"]\s+href=['"][^'"]*\?p=(\d+)['"]/);
+  return e ? e[1] : null;
 }
-function getIdBySlug(category, slug) {
-  return __async(this, null, function* () {
-    const url = `${BASE_URL}/${category}/${slug}/`;
+function V(t, e) {
+  return h(this, null, function* () {
+    let n = `${M}/${t}/${e}/`;
     try {
-      const html = yield httpGet(url, {
-        headers: HTML_HEADERS,
-        validateStatus: (s) => s === 200
-      });
-      const id = extractIdFromHtml(html);
-      if (id) {
-        console.log(`[LaMovie] \u2713 Slug directo: /${category}/${slug} \u2192 id:${id}`);
-        return { id };
-      }
-      return null;
-    } catch (e) {
+      let o = yield A(n, { headers: fe, validateStatus: (c) => c === 200 }), r = pe(o);
+      return r ? (console.log(`[LaMovie] \u2713 Slug directo: /${t}/${e} \u2192 id:${r}`), { id: r }) : null;
+    } catch (o) {
       return null;
     }
   });
 }
-function findBySlug(tmdbInfo, mediaType) {
-  return __async(this, null, function* () {
-    const { title, originalTitle, year, genres, originCountries } = tmdbInfo;
-    const categories = getCategories(mediaType, genres, originCountries);
-    const slugs = [];
-    if (title)
-      slugs.push(buildSlug(title, year));
-    if (originalTitle && originalTitle !== title)
-      slugs.push(buildSlug(originalTitle, year));
-    for (const slug of slugs) {
-      if (categories.length === 1) {
-        const result = yield getIdBySlug(categories[0], slug);
-        if (result)
-          return result;
+function he(t, e) {
+  return h(this, null, function* () {
+    let { title: n, originalTitle: o, year: r, genres: c, originCountries: s } = t, l = le(e, c, s), a = [];
+    n && a.push(C(n, r)), o && o !== n && a.push(C(o, r));
+    for (let i of a)
+      if (l.length === 1) {
+        let u = yield V(l[0], i);
+        if (u)
+          return u;
       } else {
-        const results = yield Promise.allSettled(
-          categories.map((cat) => getIdBySlug(cat, slug))
-        );
-        const found = results.find((r) => r.status === "fulfilled" && r.value);
-        if (found)
-          return found.value;
+        let f = (yield Promise.allSettled(l.map((p) => V(p, i)))).find((p) => p.status === "fulfilled" && p.value);
+        if (f)
+          return f.value;
       }
-    }
     return null;
   });
 }
-function getEpisodeId(seriesId, seasonNum, episodeNum) {
-  return __async(this, null, function* () {
-    var _a;
-    const url = `${BASE_URL}/wp-api/v1/single/episodes/list?_id=${seriesId}&season=${seasonNum}&page=1&postsPerPage=50`;
+function de(t, e, n) {
+  return h(this, null, function* () {
+    var r;
+    let o = `${M}/wp-api/v1/single/episodes/list?_id=${t}&season=${e}&page=1&postsPerPage=50`;
     try {
-      const data = yield httpGet(url, { headers: HEADERS });
-      if (!((_a = data == null ? void 0 : data.data) == null ? void 0 : _a.posts))
+      let c = yield A(o, { headers: E });
+      if (!((r = c == null ? void 0 : c.data) != null && r.posts))
         return null;
-      const ep = data.data.posts.find((e) => e.season_number == seasonNum && e.episode_number == episodeNum);
-      return (ep == null ? void 0 : ep._id) || null;
-    } catch (e) {
-      console.log(`[LaMovie] Error episodios: ${e.message}`);
-      return null;
+      let s = c.data.posts.find((l) => l.season_number == e && l.episode_number == n);
+      return (s == null ? void 0 : s._id) || null;
+    } catch (c) {
+      return console.log(`[LaMovie] Error episodios: ${c.message}`), null;
     }
   });
 }
-function processEmbed(embed) {
-  return __async(this, null, function* () {
+function ge(t) {
+  return h(this, null, function* () {
     try {
-      const resolver = getResolver(embed.url);
-      if (!resolver) {
-        console.log(`[LaMovie] Sin resolver para: ${embed.url}`);
+      let e = ae(t.url);
+      if (!e)
+        return console.log(`[LaMovie] Sin resolver para: ${t.url}`), null;
+      let n = yield e(t.url);
+      if (!n || !n.url)
         return null;
-      }
-      const result = yield resolver(embed.url);
-      if (!result || !result.url)
-        return null;
-      const quality = normalizeQuality(embed.quality || "1080p");
-      const serverName = getServerName(embed.url);
-      return {
-        name: "LaMovie",
-        title: `${quality} \xB7 ${serverName}`,
-        url: result.url,
-        quality,
-        headers: result.headers || {}
-      };
+      let o = ie(t.quality || "1080p"), r = ce(t.url);
+      return { name: "LaMovie", title: `${o} \xB7 ${r}`, url: n.url, quality: o, headers: n.headers || {} };
     } catch (e) {
-      console.log(`[LaMovie] Error procesando embed: ${e.message}`);
-      return null;
+      return console.log(`[LaMovie] Error procesando embed: ${e.message}`), null;
     }
   });
 }
-function getStreams(tmdbId, mediaType, season, episode) {
-  return __async(this, null, function* () {
-    var _a;
-    if (!tmdbId || !mediaType)
+function me(t, e, n, o) {
+  return h(this, null, function* () {
+    var c;
+    if (!t || !e)
       return [];
-    const startTime = Date.now();
-    console.log(`[LaMovie] Buscando: TMDB ${tmdbId} (${mediaType})${season ? ` S${season}E${episode}` : ""}`);
+    let r = Date.now();
+    console.log(`[LaMovie] Buscando: TMDB ${t} (${e})${n ? ` S${n}E${o}` : ""}`);
     try {
-      const tmdbInfo = yield getTmdbData(tmdbId, mediaType);
-      if (!tmdbInfo)
+      let s = yield ue(t, e);
+      if (!s)
         return [];
-      const found = yield findBySlug(tmdbInfo, mediaType);
-      if (!found) {
-        console.log("[LaMovie] No encontrado por slug");
-        return [];
+      let l = yield he(s, e);
+      if (!l)
+        return console.log("[LaMovie] No encontrado por slug"), [];
+      let a = l.id;
+      if (e === "tv" && n && o) {
+        let d = yield de(a, n, o);
+        if (!d)
+          return console.log(`[LaMovie] Episodio S${n}E${o} no encontrado`), [];
+        a = d;
       }
-      let targetId = found.id;
-      if (mediaType === "tv" && season && episode) {
-        const epId = yield getEpisodeId(targetId, season, episode);
-        if (!epId) {
-          console.log(`[LaMovie] Episodio S${season}E${episode} no encontrado`);
-          return [];
-        }
-        targetId = epId;
-      }
-      const data = yield httpGet(
-        `${BASE_URL}/wp-api/v1/player?postId=${targetId}&demo=0`,
-        { headers: HEADERS }
-      );
-      if (!((_a = data == null ? void 0 : data.data) == null ? void 0 : _a.embeds)) {
-        console.log("[LaMovie] No hay embeds disponibles");
-        return [];
-      }
-      const embedPromises = data.data.embeds.map((embed) => processEmbed(embed));
-      const streams = yield new Promise((resolve3) => {
-        const results = [];
-        let completed = 0;
-        const total = embedPromises.length;
-        const finish = () => resolve3(results.filter(Boolean));
-        embedPromises.forEach((p) => {
-          p.then((result) => {
-            if (result)
-              results.push(result);
-            completed++;
-            if (completed === total) {
-              finish();
-            }
+      let i = yield A(`${M}/wp-api/v1/player?postId=${a}&demo=0`, { headers: E });
+      if (!((c = i == null ? void 0 : i.data) != null && c.embeds))
+        return console.log("[LaMovie] No hay embeds disponibles"), [];
+      let u = i.data.embeds.map((d) => ge(d)), f = yield new Promise((d) => {
+        let m = [], w = 0, L = u.length, b = () => d(m.filter(Boolean));
+        u.forEach((z) => {
+          z.then((W) => {
+            W && m.push(W), w++, w === L && b();
           }).catch(() => {
-            completed++;
-            if (completed === total) {
-              finish();
-            }
+            w++, w === L && b();
           });
         });
-      });
-      const elapsed = ((Date.now() - startTime) / 1e3).toFixed(2);
-      console.log(`[LaMovie] \u2713 ${streams.length} streams en ${elapsed}s`);
-      return streams;
-    } catch (e) {
-      console.log(`[LaMovie] Error: ${e.message}`);
-      return [];
+      }), p = ((Date.now() - r) / 1e3).toFixed(2);
+      return console.log(`[LaMovie] \u2713 ${f.length} streams en ${p}s`), f;
+    } catch (s) {
+      return console.log(`[LaMovie] Error: ${s.message}`), [];
     }
   });
 }
-
