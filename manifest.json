@@ -67,6 +67,17 @@
       "filename": "providers/peliserieshoy.js",
       "enabled": true,
       "contentLanguage": ["es"]
+    },
+    {
+      "id": "plutotv",
+      "name": "PlutoTV",
+      "description": "Streams en Latino desde PlutoTV.",
+      "version": "1.0.0",
+      "author": "KennethJYS",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/plutotv.js",
+      "enabled": true,
+      "contentLanguage": ["es"]
     }
   ]
 }
