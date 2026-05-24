@@ -21,18 +21,18 @@ var K = (o) => P(w({}, "__esModule", { value: true }), o);
 var f = (o, t, e) => new Promise((s, r) => {
   var n = (c) => {
     try {
-      u(e.next(c));
+      i(e.next(c));
     } catch (l) {
       r(l);
     }
   }, a = (c) => {
     try {
-      u(e.throw(c));
+      i(e.throw(c));
     } catch (l) {
       r(l);
     }
-  }, u = (c) => c.done ? s(c.value) : Promise.resolve(c.value).then(n, a);
-  u((e = e.apply(o, t)).next());
+  }, i = (c) => c.done ? s(c.value) : Promise.resolve(c.value).then(n, a);
+  i((e = e.apply(o, t)).next());
 });
 var V = {};
 q(V, { getStreams: () => J });
@@ -49,13 +49,13 @@ function R(e) {
         let c = o.match(/[_-](\d{3,4})p/);
         return c ? `${c[1]}p` : "1080p";
       }
-      let n = 0, a = 0, u = r.split(`
+      let n = 0, a = 0, i = r.split(`
 `);
-      for (let c of u) {
+      for (let c of i) {
         let l = c.match(/RESOLUTION=(\d+)x(\d+)/);
         if (l) {
-          let i = parseInt(l[1]), p = parseInt(l[2]);
-          p > a && (a = p, n = i);
+          let u = parseInt(l[1]), p = parseInt(l[2]);
+          p > a && (a = p, n = u);
         }
       }
       return a > 0 ? B(n, a) : "1080p";
@@ -105,7 +105,7 @@ function H(o, t) {
     }
     for (let { lang: r, name: n } of e)
       try {
-        let a = `https://api.themoviedb.org/3/${t}/${o}?api_key=${T}&language=${r}`, u = yield fetch(a).then((i) => i.json()), c = t === "movie" ? u.title : u.name, l = t === "movie" ? u.original_title : u.original_name;
+        let a = `https://api.themoviedb.org/3/${t}/${o}?api_key=${T}&language=${r}`, i = yield fetch(a).then((u) => u.json()), c = t === "movie" ? i.title : i.name, l = t === "movie" ? i.original_title : i.original_name;
         if (r === "es-MX" && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(c))
           continue;
         return console.log(`[SeriesMetro] TMDB (${n}): "${c}"`), { title: c, originalTitle: l, titleEs: s };
@@ -119,12 +119,12 @@ function j(o, t) {
   return f(this, null, function* () {
     let { title: e, originalTitle: s, titleEs: r } = o, n = t === "movie" ? "pelicula" : "serie", a = [];
     e && a.push(x(e)), s && s !== e && a.push(x(s)), r && r !== e && a.push(x(r));
-    for (let u of a) {
-      let c = `${b}/${n}/${u}/`;
+    for (let i of a) {
+      let c = `${b}/${n}/${i}/`;
       try {
-        let l = yield fetch(c, { headers: M }).then((i) => i.text());
+        let l = yield fetch(c, { headers: M }).then((u) => u.text());
         if (l.includes("trembed=") || l.includes("data-post="))
-          return console.log(`[SeriesMetro] \u2713 Encontrado: /${n}/${u}/`), { url: c, html: l };
+          return console.log(`[SeriesMetro] \u2713 Encontrado: /${n}/${i}/`), { url: c, html: l };
       } catch (l) {
         console.log(`[SeriesMetro] Error fetch ${c}: ${l.message}`);
       }
@@ -139,11 +139,11 @@ function Q(o, t, e, s) {
     if (!r)
       return console.log("[SeriesMetro] No se encontr\xF3 data-post"), null;
     try {
-      let a = new URLSearchParams({ action: "action_select_season", post: r, season: String(e) }), i = [...(yield (yield fetch(`${b}/wp-admin/admin-ajax.php`, { method: "POST", headers: E(g({}, M), { "Content-Type": "application/x-www-form-urlencoded", Referer: o }), body: a })).text()).matchAll(/href="([^"]+\/capitulo\/[^"]+)"/g)].map((p) => p[1]).find((p) => {
+      let a = new URLSearchParams({ action: "action_select_season", post: r, season: String(e) }), u = [...(yield (yield fetch(`${b}/wp-admin/admin-ajax.php`, { method: "POST", headers: E(g({}, M), { "Content-Type": "application/x-www-form-urlencoded", Referer: o }), body: a })).text()).matchAll(/href="([^"]+\/capitulo\/[^"]+)"/g)].map((p) => p[1]).find((p) => {
         let m = p.match(/temporada-(\d+)-capitulo-(\d+)/i);
         return m && parseInt(m[1]) === e && parseInt(m[2]) === s;
       });
-      return i ? (console.log(`[SeriesMetro] \u2713 Episodio S${e}E${s} encontrado: ${i}`), i) : (console.log(`[SeriesMetro] Episodio S${e}E${s} no encontrado`), null);
+      return u ? (console.log(`[SeriesMetro] \u2713 Episodio S${e}E${s} encontrado: ${u}`), u) : (console.log(`[SeriesMetro] Episodio S${e}E${s} no encontrado`), null);
     } catch (a) {
       return console.log(`[SeriesMetro] Error getEpisodeUrl: ${a.message}`), null;
     }
@@ -152,17 +152,17 @@ function Q(o, t, e, s) {
 function Y(o, t) {
   return f(this, null, function* () {
     var l;
-    let e = yield fetch(o, { headers: E(g({}, M), { Referer: t }) }).then((i) => i.text()), s = [...e.matchAll(/href="#options-(\d+)"[^>]*>[\s\S]*?<span class="server">([\s\S]*?)<\/span>/g)], r = [...e.matchAll(/\?trembed=(\d+)(?:&#038;|&)trid=(\d+)(?:&#038;|&)trtype=(\d+)/g)];
+    let e = yield fetch(o, { headers: E(g({}, M), { Referer: t }) }).then((u) => u.text()), s = [...e.matchAll(/href="#options-(\d+)"[^>]*>[\s\S]*?<span class="server">([\s\S]*?)<\/span>/g)], r = [...e.matchAll(/\?trembed=(\d+)(?:&#038;|&)trid=(\d+)(?:&#038;|&)trtype=(\d+)/g)];
     if (r.length === 0 || s.length === 0)
       return [];
-    let n = r[0][2], a = r[0][3], u = s.sort(([, , i], [, , p]) => {
-      let m = i.replace(/<[^>]+>/g, "").split("-").pop().trim().toLowerCase(), S = p.replace(/<[^>]+>/g, "").split("-").pop().trim().toLowerCase(), d = k.indexOf(m), h = k.indexOf(S);
+    let n = r[0][2], a = r[0][3], i = s.sort(([, , u], [, , p]) => {
+      let m = u.replace(/<[^>]+>/g, "").split("-").pop().trim().toLowerCase(), S = p.replace(/<[^>]+>/g, "").split("-").pop().trim().toLowerCase(), d = k.indexOf(m), h = k.indexOf(S);
       return (d === -1 ? 99 : d) - (h === -1 ? 99 : h);
     }), c = [];
-    for (let [, i, p] of u) {
+    for (let [, u, p] of i) {
       let S = p.replace(/<[^>]+>/g, "").trim().split("-").pop().trim().toLowerCase(), d = G[S] || S;
       try {
-        let A = (l = (yield fetch(`${b}/?trembed=${i}&trid=${n}&trtype=${a}`, { headers: E(g({}, M), { Referer: o }) }).then((I) => I.text())).match(/<iframe[^>]*src="(https?:\/\/fastream\.to\/[^"]+)"/i)) == null ? void 0 : l[1];
+        let A = (l = (yield fetch(`${b}/?trembed=${u}&trid=${n}&trtype=${a}`, { headers: E(g({}, M), { Referer: o }) }).then((I) => I.text())).match(/<iframe[^>]*src="(https?:\/\/fastream\.to\/[^"]+)"/i)) == null ? void 0 : l[1];
         if (!A)
           continue;
         let $ = yield F(A);
@@ -171,7 +171,7 @@ function Y(o, t) {
         if (c.push({ name: "SeriesMetro", title: `${$.quality} \xB7 ${d} \xB7 Fastream`, url: $.url, quality: $.quality, headers: $.headers }), d === "Latino")
           return console.log("[SeriesMetro] Latino encontrado, retornando"), c;
       } catch (h) {
-        console.log(`[SeriesMetro] Error embed ${i}: ${h.message}`);
+        console.log(`[SeriesMetro] Error embed ${u}: ${h.message}`);
       }
     }
     return c;
@@ -190,14 +190,14 @@ function J(o, t, e, s) {
       let a = yield j(n, t);
       if (!a)
         return [];
-      let u = a.url;
+      let i = a.url;
       if (t === "tv" && e && s) {
-        let i = yield Q(a.url, a.html, e, s);
-        if (!i)
+        let u = yield Q(a.url, a.html, e, s);
+        if (!u)
           return console.log(`[SeriesMetro] Episodio S${e}E${s} no encontrado`), [];
-        console.log(`[SeriesMetro] Episodio: ${i}`), u = i;
+        console.log(`[SeriesMetro] Episodio: ${u}`), i = u;
       }
-      let c = yield Y(u, a.url), l = ((Date.now() - r) / 1e3).toFixed(2);
+      let c = yield Y(i, i), l = ((Date.now() - r) / 1e3).toFixed(2);
       return console.log(`[SeriesMetro] \u2713 ${c.length} streams en ${l}s`), c;
     } catch (n) {
       return console.log(`[SeriesMetro] Error: ${n.message}`), [];
