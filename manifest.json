@@ -74,7 +74,7 @@
       "description": "Streams en Latino desde Seriesflix.",
       "version": "1.0.0",
       "author": "KennethJYS",
-      "supportedTypes": ["movie", "tv"],
+      "supportedTypes": ["tv"],
       "filename": "providers/seriesflix.js",
       "enabled": true,
       "contentLanguage": ["es"]
