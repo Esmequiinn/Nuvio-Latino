@@ -78,6 +78,17 @@
       "filename": "providers/seriesflix.js",
       "enabled": true,
       "contentLanguage": ["es"]
+    },
+    {
+      "id": "detodopeliculas",
+      "name": "Detodopeliculas",
+      "description": "Streams en Latino desde Detodopeliculas.",
+      "version": "1.0.0",
+      "author": "KennethJYS",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/detodopeliculas.js",
+      "enabled": true,
+      "contentLanguage": ["es"]
     }
   ]
 }
