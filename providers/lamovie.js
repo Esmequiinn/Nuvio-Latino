@@ -281,7 +281,7 @@ function I(t) {
     }
   });
 }
-var te = "439c478a771f35c05022f9feabcca01c", R = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", E = { "User-Agent": R, Accept: "application/json" }, M = "https://la.movie", ne = ["JP", "CN", "KR"], oe = 16, re = { "goodstream.one": _, "hlswish.com": x, "streamwish.com": x, "streamwish.to": x, "strwish.com": x, "voe.sx": H, "vimeos.net": I }, se = [];
+var te = "439c478a771f35c05022f9feabcca01c", R = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", E = { "User-Agent": R, Accept: "application/json" }, M = "https://lamovie.org", ne = ["JP", "CN", "KR"], oe = 16, re = { "goodstream.one": _, "hlswish.com": x, "streamwish.com": x, "streamwish.to": x, "strwish.com": x, "voe.sx": H, "vimeos.net": I }, se = [];
 function A(n) {
   return h(this, arguments, function* (t, e = {}) {
     let o = yield fetch(t, { headers: $({ "User-Agent": R }, e.headers), redirect: "follow" });
