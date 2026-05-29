@@ -1,65 +1,65 @@
-var X = Object.create;
-var $ = Object.defineProperty, J = Object.defineProperties, z = Object.getOwnPropertyDescriptor, K = Object.getOwnPropertyDescriptors, Y = Object.getOwnPropertyNames, O = Object.getOwnPropertySymbols, Q = Object.getPrototypeOf, P = Object.prototype.hasOwnProperty, Z = Object.prototype.propertyIsEnumerable;
-var U = (t, e, o) => e in t ? $(t, e, { enumerable: true, configurable: true, writable: true, value: o }) : t[e] = o, R = (t, e) => {
+var F = Object.create;
+var A = Object.defineProperty, J = Object.defineProperties, z = Object.getOwnPropertyDescriptor, K = Object.getOwnPropertyDescriptors, Y = Object.getOwnPropertyNames, P = Object.getOwnPropertySymbols, Q = Object.getPrototypeOf, U = Object.prototype.hasOwnProperty, Z = Object.prototype.propertyIsEnumerable;
+var O = (t, e, o) => e in t ? A(t, e, { enumerable: true, configurable: true, writable: true, value: o }) : t[e] = o, R = (t, e) => {
   for (var o in e || (e = {}))
-    P.call(e, o) && U(t, o, e[o]);
-  if (O)
-    for (var o of O(e))
-      Z.call(e, o) && U(t, o, e[o]);
+    U.call(e, o) && O(t, o, e[o]);
+  if (P)
+    for (var o of P(e))
+      Z.call(e, o) && O(t, o, e[o]);
   return t;
 }, _ = (t, e) => J(t, K(e));
 var ee = (t, e) => {
   for (var o in e)
-    $(t, o, { get: e[o], enumerable: true });
-}, C = (t, e, o, s) => {
+    A(t, o, { get: e[o], enumerable: true });
+}, C = (t, e, o, r) => {
   if (e && typeof e == "object" || typeof e == "function")
-    for (let r of Y(e))
-      !P.call(t, r) && r !== o && $(t, r, { get: () => e[r], enumerable: !(s = z(e, r)) || s.enumerable });
+    for (let n of Y(e))
+      !U.call(t, n) && n !== o && A(t, n, { get: () => e[n], enumerable: !(r = z(e, n)) || r.enumerable });
   return t;
 };
-var te = (t, e, o) => (o = t != null ? X(Q(t)) : {}, C(e || !t || !t.__esModule ? $(o, "default", { value: t, enumerable: true }) : o, t)), oe = (t) => C($({}, "__esModule", { value: true }), t);
-var p = (t, e, o) => new Promise((s, r) => {
-  var i = (l) => {
+var te = (t, e, o) => (o = t != null ? F(Q(t)) : {}, C(e || !t || !t.__esModule ? A(o, "default", { value: t, enumerable: true }) : o, t)), oe = (t) => C(A({}, "__esModule", { value: true }), t);
+var p = (t, e, o) => new Promise((r, n) => {
+  var l = (i) => {
     try {
-      c(o.next(l));
-    } catch (n) {
-      r(n);
+      c(o.next(i));
+    } catch (s) {
+      n(s);
     }
-  }, a = (l) => {
+  }, a = (i) => {
     try {
-      c(o.throw(l));
-    } catch (n) {
-      r(n);
+      c(o.throw(i));
+    } catch (s) {
+      n(s);
     }
-  }, c = (l) => l.done ? s(l.value) : Promise.resolve(l.value).then(i, a);
+  }, c = (i) => i.done ? r(i.value) : Promise.resolve(i.value).then(l, a);
   c((o = o.apply(t, e)).next());
 });
-var Ae = {};
-ee(Ae, { getStreams: () => Re });
-module.exports = oe(Ae);
+var $e = {};
+ee($e, { getStreams: () => ve });
+module.exports = oe($e);
 var ne = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
 function se(t, e) {
   return t >= 3840 || e >= 2160 ? "4K" : t >= 1920 || e >= 1080 ? "1080p" : t >= 1280 || e >= 720 ? "720p" : t >= 854 || e >= 480 ? "480p" : "360p";
 }
-function x(o) {
+function S(o) {
   return p(this, arguments, function* (t, e = {}) {
     try {
-      let r = yield (yield fetch(t, { headers: R({ "User-Agent": ne }, e), redirect: "follow" })).text();
-      if (!r.includes("#EXT-X-STREAM-INF")) {
-        let l = t.match(/[_-](\d{3,4})p/);
-        return l ? `${l[1]}p` : "1080p";
+      let n = yield (yield fetch(t, { headers: R({ "User-Agent": ne }, e), redirect: "follow" })).text();
+      if (!n.includes("#EXT-X-STREAM-INF")) {
+        let i = t.match(/[_-](\d{3,4})p/);
+        return i ? `${i[1]}p` : "1080p";
       }
-      let i = 0, a = 0, c = r.split(`
+      let l = 0, a = 0, c = n.split(`
 `);
-      for (let l of c) {
-        let n = l.match(/RESOLUTION=(\d+)x(\d+)/);
-        if (n) {
-          let u = parseInt(n[1]), h = parseInt(n[2]);
-          h > a && (a = h, i = u);
+      for (let i of c) {
+        let s = i.match(/RESOLUTION=(\d+)x(\d+)/);
+        if (s) {
+          let u = parseInt(s[1]), h = parseInt(s[2]);
+          h > a && (a = h, l = u);
         }
       }
-      return a > 0 ? se(i, a) : "1080p";
-    } catch (s) {
+      return a > 0 ? se(l, a) : "1080p";
+    } catch (r) {
       return "1080p";
     }
   });
@@ -74,76 +74,76 @@ function D(t) {
 }
 function ce(t, e) {
   try {
-    let s = e.replace(/^\[|\]$/g, "").split("','").map((n) => n.replace(/^'+|'+$/g, "")).map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), r = "";
-    for (let n of t) {
-      let u = n.charCodeAt(0);
-      u > 64 && u < 91 ? u = (u - 52) % 26 + 65 : u > 96 && u < 123 && (u = (u - 84) % 26 + 97), r += String.fromCharCode(u);
+    let r = e.replace(/^\[|\]$/g, "").split("','").map((s) => s.replace(/^'+|'+$/g, "")).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), n = "";
+    for (let s of t) {
+      let u = s.charCodeAt(0);
+      u > 64 && u < 91 ? u = (u - 52) % 26 + 65 : u > 96 && u < 123 && (u = (u - 84) % 26 + 97), n += String.fromCharCode(u);
     }
-    for (let n of s)
-      r = r.replace(new RegExp(n, "g"), "_");
-    r = r.split("_").join("");
-    let i = D(r);
-    if (!i)
+    for (let s of r)
+      n = n.replace(new RegExp(s, "g"), "_");
+    n = n.split("_").join("");
+    let l = D(n);
+    if (!l)
       return null;
     let a = "";
-    for (let n = 0; n < i.length; n++)
-      a += String.fromCharCode((i.charCodeAt(n) - 3 + 256) % 256);
-    let c = a.split("").reverse().join(""), l = D(c);
-    return l ? JSON.parse(l) : null;
+    for (let s = 0; s < l.length; s++)
+      a += String.fromCharCode((l.charCodeAt(s) - 3 + 256) % 256);
+    let c = a.split("").reverse().join(""), i = D(c);
+    return i ? JSON.parse(i) : null;
   } catch (o) {
     return console.log("[VOE] voeDecode error:", o.message), null;
   }
 }
-function T(o) {
+function x(o) {
   return p(this, arguments, function* (t, e = {}) {
     return yield fetch(t, { method: "GET", headers: R({ "User-Agent": re, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, e), redirect: "follow" });
   });
 }
-function W(t) {
+function M(t) {
   return p(this, null, function* () {
     try {
       console.log(`[VOE] Resolviendo: ${t}`);
-      let e = yield T(t, { Referer: t });
+      let e = yield x(t, { Referer: t });
       if (!e.ok)
         throw new Error(`HTTP ${e.status}`);
       let o = yield e.text();
       if (/permanentToken/i.test(o)) {
-        let l = o.match(/window\.location\.href\s*=\s*'([^']+)'/i);
-        if (l) {
-          console.log(`[VOE] Permanent token redirect -> ${l[1]}`);
-          let n = yield T(l[1], { Referer: t });
-          n.ok && (o = yield n.text());
+        let i = o.match(/window\.location\.href\s*=\s*'([^']+)'/i);
+        if (i) {
+          console.log(`[VOE] Permanent token redirect -> ${i[1]}`);
+          let s = yield x(i[1], { Referer: t });
+          s.ok && (o = yield s.text());
         }
       }
-      let s = o.match(/json">\s*\[\s*['"]([^'"]+)['"]\s*\]\s*<\/script>\s*<script[^>]*src=['"]([^'"]+)['"]/i);
-      if (s) {
-        let l = s[1], n = s[2].startsWith("http") ? s[2] : new URL(s[2], t).href;
-        console.log(`[VOE] Found encoded array + loader: ${n}`);
-        let u = yield T(n, { Referer: t }), h = u.ok ? yield u.text() : "", w = h.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || h.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
+      let r = o.match(/json">\s*\[\s*['"]([^'"]+)['"]\s*\]\s*<\/script>\s*<script[^>]*src=['"]([^'"]+)['"]/i);
+      if (r) {
+        let i = r[1], s = r[2].startsWith("http") ? r[2] : new URL(r[2], t).href;
+        console.log(`[VOE] Found encoded array + loader: ${s}`);
+        let u = yield x(s, { Referer: t }), h = u.ok ? yield u.text() : "", w = h.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || h.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
         if (w) {
-          let f = ce(l, w[1]);
+          let f = ce(i, w[1]);
           if (f && (f.source || f.direct_access_url)) {
-            let d = f.source || f.direct_access_url, m = yield x(d, { Referer: t });
+            let d = f.source || f.direct_access_url, m = yield S(d, { Referer: t });
             return console.log(`[VOE] URL encontrada: ${d.substring(0, 80)}...`), { url: d, quality: m, headers: { Referer: t } };
           }
         }
       }
-      let r = /(?:mp4|hls)'\s*:\s*'([^']+)'/gi, i = /(?:mp4|hls)"\s*:\s*"([^"]+)"/gi, a = [], c;
-      for (; (c = r.exec(o)) !== null; )
+      let n = /(?:mp4|hls)'\s*:\s*'([^']+)'/gi, l = /(?:mp4|hls)"\s*:\s*"([^"]+)"/gi, a = [], c;
+      for (; (c = n.exec(o)) !== null; )
         a.push(c);
-      for (; (c = i.exec(o)) !== null; )
+      for (; (c = l.exec(o)) !== null; )
         a.push(c);
-      for (let l of a) {
-        let n = l[1];
-        if (!n)
+      for (let i of a) {
+        let s = i[1];
+        if (!s)
           continue;
-        let u = n;
+        let u = s;
         if (u.startsWith("aHR0"))
           try {
             u = atob(u);
           } catch (h) {
           }
-        return console.log(`[VOE] URL encontrada (fallback): ${u.substring(0, 80)}...`), { url: u, quality: yield x(u, { Referer: t }), headers: { Referer: t } };
+        return console.log(`[VOE] URL encontrada (fallback): ${u.substring(0, 80)}...`), { url: u, quality: yield S(u, { Referer: t }), headers: { Referer: t } };
       }
       return console.log("[VOE] No se encontr\xF3 URL"), null;
     } catch (e) {
@@ -151,103 +151,123 @@ function W(t) {
     }
   });
 }
-var M = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function N(t) {
+var W = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function H(t) {
   return p(this, null, function* () {
     try {
       console.log(`[OkRu] Resolviendo: ${t}`);
-      let e = yield fetch(t, { headers: { "User-Agent": M, Accept: "text/html", Referer: "https://ok.ru/" }, redirect: "follow" }).then((n) => n.text());
+      let e = yield fetch(t, { headers: { "User-Agent": W, Accept: "text/html", Referer: "https://ok.ru/" }, redirect: "follow" }).then((s) => s.text());
       if (e.includes("copyrightsRestricted") || e.includes("COPYRIGHTS_RESTRICTED") || e.includes("LIMITED_ACCESS") || e.includes("notFound") || !e.includes("urls"))
         return console.log("[OkRu] Video no disponible o eliminado"), null;
-      let s = [...e.replace(/\\&quot;/g, '"').replace(/\\u0026/g, "&").replace(/\\/g, "").matchAll(/"name":"([^"]+)","url":"([^"]+)"/g)], r = ["full", "hd", "sd", "low", "lowest"], i = s.map((n) => ({ type: n[1], url: n[2] })).filter((n) => !n.type.toLowerCase().includes("mobile") && n.url.startsWith("http"));
-      if (i.length === 0)
+      let r = [...e.replace(/\\&quot;/g, '"').replace(/\\u0026/g, "&").replace(/\\/g, "").matchAll(/"name":"([^"]+)","url":"([^"]+)"/g)], n = ["full", "hd", "sd", "low", "lowest"], l = r.map((s) => ({ type: s[1], url: s[2] })).filter((s) => !s.type.toLowerCase().includes("mobile") && s.url.startsWith("http"));
+      if (l.length === 0)
         return console.log("[OkRu] No se encontraron URLs"), null;
-      let c = i.sort((n, u) => {
-        let h = r.findIndex((f) => n.type.toLowerCase().includes(f)), w = r.findIndex((f) => u.type.toLowerCase().includes(f));
+      let c = l.sort((s, u) => {
+        let h = n.findIndex((f) => s.type.toLowerCase().includes(f)), w = n.findIndex((f) => u.type.toLowerCase().includes(f));
         return (h === -1 ? 99 : h) - (w === -1 ? 99 : w);
       })[0];
       console.log(`[OkRu] URL encontrada (${c.type}): ${c.url.substring(0, 80)}...`);
-      let l = { full: "1080p", hd: "720p", sd: "480p", low: "360p", lowest: "240p" };
-      return { url: c.url, quality: l[c.type] || c.type, headers: { "User-Agent": M, Referer: "https://ok.ru/" } };
+      let i = { full: "1080p", hd: "720p", sd: "480p", low: "360p", lowest: "240p" };
+      return { url: c.url, quality: i[c.type] || c.type, headers: { "User-Agent": W, Referer: "https://ok.ru/" } };
     } catch (e) {
       return console.log(`[OkRu] Error: ${e.message}`), null;
     }
   });
 }
 var g = te(require("crypto-js"));
-var S = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36", B = g.default.enc.Hex.parse("6b69656d7469656e6d75613931316361"), I = g.default.enc.Hex.parse("313233343536373839306f6975797472");
+var T = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36", N = g.default.enc.Hex.parse("6b69656d7469656e6d75613931316361"), B = g.default.enc.Hex.parse("313233343536373839306f6975797472");
 function ae(t) {
-  return g.default.AES.encrypt(JSON.stringify(t), B, { iv: I, mode: g.default.mode.CBC, padding: g.default.pad.Pkcs7 }).ciphertext.toString(g.default.enc.Hex);
+  return g.default.AES.encrypt(JSON.stringify(t), N, { iv: B, mode: g.default.mode.CBC, padding: g.default.pad.Pkcs7 }).ciphertext.toString(g.default.enc.Hex);
 }
 function le(t) {
-  let e = g.default.lib.CipherParams.create({ ciphertext: g.default.enc.Hex.parse(t) }), o = g.default.AES.decrypt(e, B, { iv: I, mode: g.default.mode.CBC, padding: g.default.pad.Pkcs7 });
+  let e = g.default.lib.CipherParams.create({ ciphertext: g.default.enc.Hex.parse(t) }), o = g.default.AES.decrypt(e, N, { iv: B, mode: g.default.mode.CBC, padding: g.default.pad.Pkcs7 });
   return JSON.parse(o.toString(g.default.enc.Utf8));
 }
-function q(t) {
+function ie(t, e) {
+  return typeof XMLHttpRequest != "undefined" ? new Promise((o, r) => {
+    let n = new XMLHttpRequest();
+    n.open("GET", t), n.responseType = "text";
+    for (let [l, a] of Object.entries(e))
+      n.setRequestHeader(l, a);
+    n.onload = () => {
+      if (n.status >= 200 && n.status < 300) {
+        let l = n.getResponseHeader("content-type") || "";
+        console.log(`[Gdtvid - XHR] Content-Type del servidor: ${l}`), o(n.responseText);
+      } else
+        r(new Error(`HTTP ${n.status}`));
+    }, n.onerror = () => r(new Error("XHR network error")), n.send();
+  }) : fetch(t, { headers: e }).then((o) => {
+    if (!o.ok)
+      throw new Error(`HTTP ${o.status}`);
+    let r = o.headers.get("content-type") || "";
+    return console.log(`[Gdtvid - Fetch] Content-Type del servidor: ${r}`), o.text();
+  });
+}
+function I(t) {
   return p(this, null, function* () {
     try {
       let e = t.includes("/") ? t.split("/").pop().replace("#", "") : t, o = "https://gdtvid.p2pplay.pro";
       console.log(`[Gdtvid] Resolviendo: ${e}`);
-      let r = (yield fetch(`${o}/api/v1/info?id=${e}`, { headers: { "User-Agent": S, Referer: "https://gdtvid.p2pplay.pro/", Accept: "application/json, text/plain, */*", "X-Requested-With": "XMLHttpRequest" } })).headers.get("set-cookie"), i = { sessionId: "p2pplay_test_session", userId: "null", playerId: "jw8", videoId: e, country: "US", platform: "web", browser: "chrome", os: "windows", timestamp: Date.now() }, a = ae(i);
-      yield fetch(`${o}/api/v1/player?t=${a}`, { headers: { "User-Agent": S, Referer: "https://gdtvid.p2pplay.pro/", Cookie: r || "" } });
-      let l = yield (yield fetch(`${o}/api/v1/video?id=${e}&w=1536&h=864&r=null`, { headers: { "User-Agent": S, Referer: "https://gdtvid.p2pplay.pro/", Cookie: r || "", Accept: "text/plain, application/json, text/javascript, */*", "X-Requested-With": "XMLHttpRequest" } })).text(), n = le(l.trim()), u = "";
-      if (n.source)
-        u = n.source;
+      let n = (yield fetch(`${o}/api/v1/info?id=${e}`, { headers: { "User-Agent": T, Referer: "https://gdtvid.p2pplay.pro/", Accept: "application/json, text/plain, */*", "X-Requested-With": "XMLHttpRequest" } })).headers.get("set-cookie"), l = { sessionId: "p2pplay_test_session", userId: "null", playerId: "jw8", videoId: e, country: "US", platform: "web", browser: "chrome", os: "windows", timestamp: Date.now() }, a = ae(l);
+      yield fetch(`${o}/api/v1/player?t=${a}`, { headers: { "User-Agent": T, Referer: "https://gdtvid.p2pplay.pro/", Cookie: n || "" } });
+      let c = yield ie(`${o}/api/v1/video?id=${e}&w=1536&h=864&r=null`, { "User-Agent": T, Referer: "https://gdtvid.p2pplay.pro/", Cookie: n || "" }), i = le(c.trim()), s = "";
+      if (i.source)
+        s = i.source;
       else
         throw new Error("No se encontr\xF3 ning\xFAn enlace de video v\xE1lido en la respuesta");
-      return console.log(`[Gdtvid] URL final generada: ${u.substring(0, 80)}...`), { url: u, headers: { "User-Agent": S, Referer: "https://gdtvid.p2pplay.pro/", Origin: "https://gdtvid.p2pplay.pro" } };
+      return console.log(`[Gdtvid] URL final generada: ${s.substring(0, 80)}...`), { url: s, headers: { "User-Agent": T, Referer: "https://gdtvid.p2pplay.pro/", Origin: "https://gdtvid.p2pplay.pro" } };
     } catch (e) {
       return console.log(`[Gdtvid] Error: ${e.message}`), null;
     }
   });
 }
-var ie = "439c478a771f35c05022f9feabcca01c", H = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", L = { "User-Agent": H, Accept: "text/html,application/json" }, V = "https://detodopeliculas.nu", ue = { "voe.sx": W, "ok.ru": N, gdtvid: q }, de = { "voe.sx": "VOE", "ok.ru": "OkRu", gdtvid: "GDTvid" }, pe = ["LAT", "ESP", "SUB"], E = { LAT: "Latino", ESP: "Castellano", SUB: "Subtitulado" };
+var ue = "439c478a771f35c05022f9feabcca01c", G = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", L = { "User-Agent": G, Accept: "text/html,application/json" }, V = "https://detodopeliculas.nu", de = { "voe.sx": M, "ok.ru": H, gdtvid: I }, pe = { "voe.sx": "VOE", "ok.ru": "OkRu", gdtvid: "GDTvid" }, fe = ["LAT", "ESP", "SUB"], E = { LAT: "Latino", ESP: "Castellano", SUB: "Subtitulado" };
 function b(o) {
   return p(this, arguments, function* (t, e = {}) {
-    let s = yield fetch(t, { headers: R(R({}, L), e.headers), method: e.method || "GET", redirect: "follow" });
-    if (!s.ok)
-      throw new Error(`HTTP ${s.status}`);
-    return (s.headers.get("content-type") || "").includes("json") ? s.json() : s.text();
+    let r = yield fetch(t, { headers: R(R({}, L), e.headers), method: e.method || "GET", redirect: "follow" });
+    if (!r.ok)
+      throw new Error(`HTTP ${r.status}`);
+    return (r.headers.get("content-type") || "").includes("json") ? r.json() : r.text();
   });
 }
-function j(t, e = null) {
+function q(t, e = null) {
   let o = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
   return e ? `${o}-${e}` : o;
 }
-function fe(t) {
-  for (let [e, o] of Object.entries(ue))
+function he(t) {
+  for (let [e, o] of Object.entries(de))
     if (t.includes(e))
-      return { resolver: o, serverName: de[e] || "Online" };
+      return { resolver: o, serverName: pe[e] || "Online" };
   return { resolver: null, serverName: "Desconocido" };
 }
-function he(t) {
+function ge(t) {
   if (!t)
     return null;
   let e = t.match(/src=["']([^"']+)["']/i);
   return e ? e[1] : t;
 }
-function ge(t, e) {
-  return p(this, null, function* () {
-    let o = [{ lang: "es-MX" }, { lang: "en-US" }, { lang: "es-ES" }], s = /* @__PURE__ */ new Set(), r = "";
-    for (let { lang: i } of o)
-      try {
-        let a = yield b(`https://api.themoviedb.org/3/${e}/${t}?api_key=${ie}&language=${i}`), c = e === "movie" ? a.title : a.name, l = e === "movie" ? a.original_title : a.original_name;
-        r || (r = (a.release_date || a.first_air_date || "").substring(0, 4)), c && !/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(c) && s.add(c), l && s.add(l);
-      } catch (a) {
-      }
-    return s.size > 0 ? { titles: Array.from(s), year: r } : null;
-  });
-}
 function me(t, e) {
   return p(this, null, function* () {
-    let o = e === "movie" ? "pelicula" : "serie", s = /* @__PURE__ */ new Set();
-    for (let r of t.titles)
-      s.add(j(r, t.year)), s.add(j(r));
-    for (let r of s) {
-      let i = `${V}/${o}/${r}/`;
+    let o = [{ lang: "es-MX" }, { lang: "en-US" }, { lang: "es-ES" }], r = /* @__PURE__ */ new Set(), n = "";
+    for (let { lang: l } of o)
       try {
-        if ((yield fetch(i, { headers: L, redirect: "follow" })).ok)
-          return console.log(`[DeTodoPeliculas] \u2713 P\xE1gina encontrada: ${i}`), i;
+        let a = yield b(`https://api.themoviedb.org/3/${e}/${t}?api_key=${ue}&language=${l}`), c = e === "movie" ? a.title : a.name, i = e === "movie" ? a.original_title : a.original_name;
+        n || (n = (a.release_date || a.first_air_date || "").substring(0, 4)), c && !/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(c) && r.add(c), i && r.add(i);
+      } catch (a) {
+      }
+    return r.size > 0 ? { titles: Array.from(r), year: n } : null;
+  });
+}
+function ye(t, e) {
+  return p(this, null, function* () {
+    let o = e === "movie" ? "pelicula" : "serie", r = /* @__PURE__ */ new Set();
+    for (let n of t.titles)
+      r.add(q(n, t.year)), r.add(q(n));
+    for (let n of r) {
+      let l = `${V}/${o}/${n}/`;
+      try {
+        if ((yield fetch(l, { headers: L, redirect: "follow" })).ok)
+          return console.log(`[DeTodoPeliculas] \u2713 P\xE1gina encontrada: ${l}`), l;
       } catch (a) {
         continue;
       }
@@ -255,103 +275,103 @@ function me(t, e) {
     return null;
   });
 }
-function ye(t, e, o) {
+function we(t, e, o) {
   return p(this, null, function* () {
     try {
-      let r = (yield b(`${t}?ep_season=${e}`)).split(/<article|<li|<div class=["']episodios/i);
-      for (let i of r)
-        if (i.includes(`>${e} - ${o}<`) || i.includes(`>${e}x${o}<`)) {
-          let a = i.match(/href=["'](https:\/\/detodopeliculas\.nu\/episodio\/[^"']+)["']/i);
+      let n = (yield b(`${t}?ep_season=${e}`)).split(/<article|<li|<div class=["']episodios/i);
+      for (let l of n)
+        if (l.includes(`>${e} - ${o}<`) || l.includes(`>${e}x${o}<`)) {
+          let a = l.match(/href=["'](https:\/\/detodopeliculas\.nu\/episodio\/[^"']+)["']/i);
           if (a)
             return a[1];
         }
-    } catch (s) {
+    } catch (r) {
       return null;
     }
     return null;
   });
 }
-function we(t) {
+function Re(t) {
   return p(this, null, function* () {
-    let e = yield b(t), o = { LAT: [], ESP: [], SUB: [] }, s = /* @__PURE__ */ new Set(), r = [...e.matchAll(/<li[^>]*class=["'][^"']*dooplay_player_option[^"']*["'][^>]*>([\s\S]*?)<\/li>/gi)];
-    console.log(`[AJAX] opciones encontradas: ${r.length}`);
-    for (let i of r) {
-      let a = i[0], c = i[1].toLowerCase(), l = a.match(/data-post=["']([^"']+)["']/i), n = a.match(/data-nume=["']([^"']+)["']/i), u = a.match(/data-type=["']([^"']+)["']/i);
-      if (!l || !n || !u)
+    let e = yield b(t), o = { LAT: [], ESP: [], SUB: [] }, r = /* @__PURE__ */ new Set(), n = [...e.matchAll(/<li[^>]*class=["'][^"']*dooplay_player_option[^"']*["'][^>]*>([\s\S]*?)<\/li>/gi)];
+    console.log(`[AJAX] opciones encontradas: ${n.length}`);
+    for (let l of n) {
+      let a = l[0], c = l[1].toLowerCase(), i = a.match(/data-post=["']([^"']+)["']/i), s = a.match(/data-nume=["']([^"']+)["']/i), u = a.match(/data-type=["']([^"']+)["']/i);
+      if (!i || !s || !u)
         continue;
-      let h = l[1], w = n[1], f = u[1], d = "SUB";
+      let h = i[1], w = s[1], f = u[1], d = "SUB";
       c.includes("lat") || c.includes("latino") || c.includes("mx") ? d = "LAT" : (c.includes("cast") || c.includes("espa\xF1ol") || c.includes("es ")) && (d = "ESP");
       try {
         let m = new URLSearchParams();
         m.append("action", "doo_player_ajax"), m.append("post", h), m.append("nume", w), m.append("type", f);
-        let y = yield (yield fetch(`${V}/wp-admin/admin-ajax.php`, { method: "POST", headers: _(R({}, L), { "Content-Type": "application/x-www-form-urlencoded", "X-Requested-With": "XMLHttpRequest", Referer: t }), body: m.toString() })).text(), A;
+        let y = yield (yield fetch(`${V}/wp-admin/admin-ajax.php`, { method: "POST", headers: _(R({}, L), { "Content-Type": "application/x-www-form-urlencoded", "X-Requested-With": "XMLHttpRequest", Referer: t }), body: m.toString() })).text(), v;
         try {
-          A = JSON.parse(y);
-        } catch (ve) {
+          v = JSON.parse(y);
+        } catch (Ae) {
           console.log("[AJAX ERROR] Respuesta no JSON:", y.slice(0, 200));
           continue;
         }
-        let F = A == null ? void 0 : A.embed_url, v = he(F), G = A == null ? void 0 : A.type;
-        if (!v || G === "trailer" || !v.startsWith("http") || v.includes("youtube.com") || v.includes("googletagmanager"))
+        let X = v == null ? void 0 : v.embed_url, $ = ge(X), j = v == null ? void 0 : v.type;
+        if (!$ || j === "trailer" || !$.startsWith("http") || $.includes("youtube.com") || $.includes("googletagmanager"))
           continue;
-        s.has(v) || (s.add(v), o[d].push(v));
+        r.has($) || (r.add($), o[d].push($));
       } catch (m) {
         console.log("[AJAX ERROR]", m.message);
       }
     }
     if (o.LAT.length === 0 && o.ESP.length === 0 && o.SUB.length === 0) {
-      let i = [...e.matchAll(/<iframe[^>]+src=["']([^"']+)["']/gi)];
-      for (let a of i) {
+      let l = [...e.matchAll(/<iframe[^>]+src=["']([^"']+)["']/gi)];
+      for (let a of l) {
         let c = a[1];
-        c.startsWith("http") && (c.includes("youtube.com") || c.includes("googletagmanager") || s.has(c) || (s.add(c), o.LAT.push(c)));
+        c.startsWith("http") && (c.includes("youtube.com") || c.includes("googletagmanager") || r.has(c) || (r.add(c), o.LAT.push(c)));
       }
     }
     return o;
   });
 }
-function Re(t, e, o, s) {
+function ve(t, e, o, r) {
   return p(this, null, function* () {
     if (!t || !e)
       return [];
-    let r = Date.now();
-    console.log(`[DeTodoPeliculas] Buscando: TMDB ${t} (${e})${o ? ` S${o}E${s}` : ""}`);
+    let n = Date.now();
+    console.log(`[DeTodoPeliculas] Buscando: TMDB ${t} (${e})${o ? ` S${o}E${r}` : ""}`);
     try {
-      let i = yield ge(t, e);
-      if (!i)
+      let l = yield me(t, e);
+      if (!l)
         return [];
-      let a = yield me(i, e);
+      let a = yield ye(l, e);
       if (!a)
         return [];
       let c = a;
-      if (e === "tv" && o && s && (c = yield ye(a, o, s), !c))
+      if (e === "tv" && o && r && (c = yield we(a, o, r), !c))
         return [];
-      let l = yield we(c);
-      console.log("[DeTodoPeliculas] Embeds encontrados:", JSON.stringify({ LAT: l.LAT.length, ESP: l.ESP.length, SUB: l.SUB.length }));
-      for (let n of pe) {
-        let u = l[n];
+      let i = yield Re(c);
+      console.log("[DeTodoPeliculas] Embeds encontrados:", JSON.stringify({ LAT: i.LAT.length, ESP: i.ESP.length, SUB: i.SUB.length }));
+      for (let s of fe) {
+        let u = i[s];
         if (!u || u.length === 0)
           continue;
-        console.log(`[DeTodoPeliculas] Resolviendo ${u.length} embeds en ${E[n]}...`);
+        console.log(`[DeTodoPeliculas] Resolviendo ${u.length} embeds en ${E[s]}...`);
         let h = u.map((d) => p(this, null, function* () {
-          let { resolver: m, serverName: k } = fe(d);
+          let { resolver: m, serverName: k } = he(d);
           if (!m)
             return console.log(`[DeTodoPeliculas] \u26A0\uFE0F Falta resolver para: ${d}`), null;
           try {
             let y = yield m(d);
-            return y ? { name: "DeTodoPeliculas", title: `${y.quality || "Unknown"} \xB7 ${E[n]} \xB7 ${k}`, url: y.url, quality: y.quality || "Unknown", headers: y.headers || { "User-Agent": H, Referer: c } } : null;
+            return y ? { name: "DeTodoPeliculas", title: `${y.quality || "Unknown"} \xB7 ${E[s]} \xB7 ${k}`, url: y.url, quality: y.quality || "Unknown", headers: y.headers || { "User-Agent": G, Referer: c } } : null;
           } catch (y) {
             return null;
           }
         })), f = (yield Promise.allSettled(h)).filter((d) => d.status === "fulfilled" && d.value !== null).map((d) => d.value);
         if (f.length > 0) {
-          let d = ((Date.now() - r) / 1e3).toFixed(2);
-          return console.log(`[DeTodoPeliculas] \u2713 ${f.length} streams encontrados en ${E[n]} (${d}s), omitiendo otros idiomas.`), f;
+          let d = ((Date.now() - n) / 1e3).toFixed(2);
+          return console.log(`[DeTodoPeliculas] \u2713 ${f.length} streams encontrados en ${E[s]} (${d}s), omitiendo otros idiomas.`), f;
         } else
-          console.log(`[DeTodoPeliculas] Sin streams exitosos en ${E[n]}, intentando siguiente idioma...`);
+          console.log(`[DeTodoPeliculas] Sin streams exitosos en ${E[s]}, intentando siguiente idioma...`);
       }
       return console.log("[DeTodoPeliculas] Agotada la b\xFAsqueda en todos los idiomas sin \xE9xito."), [];
-    } catch (i) {
-      return console.log(`[DeTodoPeliculas] Error Cr\xEDtico: ${i.message}`), [];
+    } catch (l) {
+      return console.log(`[DeTodoPeliculas] Error Cr\xEDtico: ${l.message}`), [];
     }
   });
 }
