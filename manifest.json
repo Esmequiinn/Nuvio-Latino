@@ -100,6 +100,17 @@
       "filename": "providers/lamovie.js",
       "enabled": true,
       "contentLanguage": ["es"]
+    },
+    {
+      "id": "hackstore",
+      "name": "HackStore",
+      "description": "Streams en Latino desde HackStore.",
+      "version": "1.3.0",
+      "author": "KennethJYS",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/hackstore.js",
+      "enabled": true,
+      "contentLanguage": ["es"]
     }
   ]
 }
