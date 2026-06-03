@@ -1,404 +1,401 @@
-var y = Object.defineProperty, P = Object.defineProperties, z = Object.getOwnPropertyDescriptor, D = Object.getOwnPropertyDescriptors, Q = Object.getOwnPropertyNames, U = Object.getOwnPropertySymbols;
+var x = Object.defineProperty, I = Object.defineProperties, P = Object.getOwnPropertyDescriptor, z = Object.getOwnPropertyDescriptors, D = Object.getOwnPropertyNames, W = Object.getOwnPropertySymbols;
 var H = Object.prototype.hasOwnProperty, j = Object.prototype.propertyIsEnumerable;
-var W = (t, o, r) => o in t ? y(t, o, { enumerable: true, configurable: true, writable: true, value: r }) : t[o] = r, $ = (t, o) => {
-  for (var r in o || (o = {}))
-    H.call(o, r) && W(t, r, o[r]);
-  if (U)
-    for (var r of U(o))
-      j.call(o, r) && W(t, r, o[r]);
-  return t;
-}, M = (t, o) => P(t, D(o));
-var C = (t, o) => {
-  for (var r in o)
-    y(t, r, { get: o[r], enumerable: true });
-}, K = (t, o, r, n) => {
-  if (o && typeof o == "object" || typeof o == "function")
-    for (let s of Q(o))
-      !H.call(t, s) && s !== r && y(t, s, { get: () => o[s], enumerable: !(n = z(o, s)) || n.enumerable });
-  return t;
+var b = (e, t, o) => t in e ? x(e, t, { enumerable: true, configurable: true, writable: true, value: o }) : e[t] = o, g = (e, t) => {
+  for (var o in t || (t = {}))
+    H.call(t, o) && b(e, o, t[o]);
+  if (W)
+    for (var o of W(t))
+      j.call(t, o) && b(e, o, t[o]);
+  return e;
+}, U = (e, t) => I(e, z(t));
+var C = (e, t) => {
+  for (var o in t)
+    x(e, o, { get: t[o], enumerable: true });
+}, K = (e, t, o, r) => {
+  if (t && typeof t == "object" || typeof t == "function")
+    for (let n of D(t))
+      !H.call(e, n) && n !== o && x(e, n, { get: () => t[n], enumerable: !(r = P(t, n)) || r.enumerable });
+  return e;
 };
-var B = (t) => K(y({}, "__esModule", { value: true }), t);
-var d = (t, o, r) => new Promise((n, s) => {
-  var i = (l) => {
+var Q = (e) => K(x({}, "__esModule", { value: true }), e);
+var p = (e, t, o) => new Promise((r, n) => {
+  var c = (a) => {
     try {
-      f(r.next(l));
-    } catch (a) {
-      s(a);
+      u(o.next(a));
+    } catch (i) {
+      n(i);
     }
-  }, c = (l) => {
+  }, s = (a) => {
     try {
-      f(r.throw(l));
-    } catch (a) {
-      s(a);
+      u(o.throw(a));
+    } catch (i) {
+      n(i);
     }
-  }, f = (l) => l.done ? n(l.value) : Promise.resolve(l.value).then(i, c);
-  f((r = r.apply(t, o)).next());
+  }, u = (a) => a.done ? r(a.value) : Promise.resolve(a.value).then(c, s);
+  u((o = o.apply(e, t)).next());
 });
-var we = {};
-C(we, { getStreams: () => me });
-module.exports = B(we);
-var G = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", v = { vimeos: { h: "720p", n: "480p" }, goodstream: { x: "1080p", h: "720p", n: "480p", l: "360p" }, vidhide: { n: "720p", l: "480p" }, streamwish: { x: "1080p", h: "1080p", n: "720p", l: "480p" }, voe: { n: "720p", l: "360p" } }, F = ["x", "o", "h", "n", "l"];
-function X(t) {
-  return t.includes("vimeos") ? v.vimeos : t.includes("goodstream") ? v.goodstream : t.includes("cloudwindow-route") ? v.voe : t.includes("minochinos") || t.includes("vidhide") || t.includes("dintezuvio") || t.includes("dramiyos") ? v.vidhide : t.includes("premilkyway") || t.includes("hlswish") || t.includes("vibuxer") || t.includes("streamwish") ? v.streamwish : null;
+var ge = {};
+C(ge, { getStreams: () => me });
+module.exports = Q(ge);
+var B = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", w = { vimeos: { h: "720p", n: "480p" }, goodstream: { x: "1080p", h: "720p", n: "480p", l: "360p" }, vidhide: { n: "720p", l: "480p" }, streamwish: { x: "1080p", h: "1080p", n: "720p", l: "480p" }, voe: { n: "720p", l: "360p" } }, G = ["x", "o", "h", "n", "l"];
+function F(e) {
+  return e.includes("vimeos") ? w.vimeos : e.includes("goodstream") ? w.goodstream : e.includes("cloudwindow-route") ? w.voe : e.includes("minochinos") || e.includes("vidhide") || e.includes("dintezuvio") || e.includes("dramiyos") ? w.vidhide : e.includes("premilkyway") || e.includes("hlswish") || e.includes("vibuxer") || e.includes("streamwish") ? w.streamwish : null;
 }
-function R(r) {
-  return d(this, arguments, function* (t, o = {}) {
-    let n = m(t);
-    return n !== "Unknown" ? n : yield Y(t, o);
+function y(o) {
+  return p(this, arguments, function* (e, t = {}) {
+    let r = m(e);
+    return r !== "Unknown" ? r : yield J(e, t);
   });
 }
-function m(t) {
-  if (!t)
+function m(e) {
+  if (!e)
     return "Unknown";
-  let o = X(t);
-  if (o) {
-    let n = t.match(/_,([a-z,]+),\.urlset/);
-    if (n) {
-      let s = n[1].split(",").filter(Boolean);
-      for (let i of F)
-        if (s.includes(i) && o[i])
-          return o[i];
+  let t = F(e);
+  if (t) {
+    let r = e.match(/_,([a-z,]+),\.urlset/);
+    if (r) {
+      let n = r[1].split(",").filter(Boolean);
+      for (let c of G)
+        if (n.includes(c) && t[c])
+          return t[c];
     }
   }
-  let r = t.match(/[_\-\/](\d{3,4})p/);
-  return r ? r[1] + "p" : "Unknown";
+  let o = e.match(/[_\-\/](\d{3,4})p/);
+  return o ? o[1] + "p" : "Unknown";
 }
-function J(t, o) {
-  return t >= 3840 || o >= 2160 ? "4K" : t >= 1920 || o >= 1080 ? "1080p" : t >= 1280 || o >= 720 ? "720p" : t >= 854 || o >= 480 ? "480p" : "360p";
+function X(e, t) {
+  return e >= 3840 || t >= 2160 ? "4K" : e >= 1920 || t >= 1080 ? "1080p" : e >= 1280 || t >= 720 ? "720p" : e >= 854 || t >= 480 ? "480p" : "360p";
 }
-function Y(r) {
-  return d(this, arguments, function* (t, o = {}) {
+function J(o) {
+  return p(this, arguments, function* (e, t = {}) {
     try {
-      console.log("[detectQuality] Fetching:", t.substring(0, 80));
-      let n = yield fetch(t, { headers: $({ "User-Agent": G }, o), redirect: "follow" });
-      console.log("[detectQuality] Status:", n.status, "ok:", n.ok);
-      let s = yield n.text();
-      if (console.log("[detectQuality] Response length:", s.length, "primeros 100:", s.substring(0, 100)), !s.includes("#EXT-X-STREAM-INF")) {
-        let f = t.match(/[_-](\d{3,4})p/);
-        return f ? `${f[1]}p` : "Unknown";
+      let n = yield (yield fetch(e, { headers: g({ "User-Agent": B }, t), redirect: "follow" })).text();
+      if (!n.includes("#EXT-X-STREAM-INF")) {
+        let u = e.match(/[_-](\d{3,4})p/);
+        return u ? `${u[1]}p` : "Unknown";
       }
-      let i = 0, c = 0;
-      for (let f of s.split(`
+      let c = 0, s = 0;
+      for (let u of n.split(`
 `)) {
-        let l = f.match(/RESOLUTION=(\d+)x(\d+)/);
-        if (l) {
-          let a = parseInt(l[2]);
-          a > c && (c = a, i = parseInt(l[1]));
+        let a = u.match(/RESOLUTION=(\d+)x(\d+)/);
+        if (a) {
+          let i = parseInt(a[2]);
+          i > s && (s = i, c = parseInt(a[1]));
         }
       }
-      return c > 0 ? J(i, c) : "Unknown";
-    } catch (n) {
-      return console.log("[detectQuality] Error:", e.message), "Unknown";
+      return s > 0 ? X(c, s) : "Unknown";
+    } catch (r) {
+      return "Unknown";
     }
   });
 }
-var L = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function T(t) {
-  return d(this, null, function* () {
+var M = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function L(e) {
+  return p(this, null, function* () {
     try {
-      console.log(`[GoodStream] Resolviendo: ${t}`);
-      let o = yield fetch(t, { headers: { "User-Agent": L, Referer: "https://goodstream.one", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow" });
-      if (!o.ok)
-        throw new Error(`HTTP ${o.status}`);
-      let n = (yield o.text()).match(/file:\s*"([^"]+)"/);
-      if (!n)
+      console.log(`[GoodStream] Resolviendo: ${e}`);
+      let t = yield fetch(e, { headers: { "User-Agent": M, Referer: "https://goodstream.one", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow" });
+      if (!t.ok)
+        throw new Error(`HTTP ${t.status}`);
+      let r = (yield t.text()).match(/file:\s*"([^"]+)"/);
+      if (!r)
         return console.log('[GoodStream] No se encontr\xF3 patr\xF3n file:"..."'), null;
-      let s = n[1], i = { Referer: t, Origin: "https://goodstream.one", "User-Agent": L }, c = m(s);
-      return console.log(`[GoodStream] URL encontrada (${c}): ${s.substring(0, 80)}...`), { url: s, quality: c, headers: i };
-    } catch (o) {
-      return console.log(`[GoodStream] Error: ${o.message}`), null;
+      let n = r[1], c = { Referer: e, Origin: "https://goodstream.one", "User-Agent": M }, s = m(n);
+      return console.log(`[GoodStream] URL encontrada (${s}): ${n.substring(0, 80)}...`), { url: n, quality: s, headers: c };
+    } catch (t) {
+      return console.log(`[GoodStream] Error: ${t.message}`), null;
     }
   });
 }
-var Z = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function _(t) {
+var Y = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function T(e) {
   try {
-    return typeof atob != "undefined" ? atob(t) : Buffer.from(t, "base64").toString("utf8");
-  } catch (o) {
+    return typeof atob != "undefined" ? atob(e) : Buffer.from(e, "base64").toString("utf8");
+  } catch (t) {
     return null;
   }
 }
-function ee(t, o) {
+function Z(e, t) {
   try {
-    let n = o.replace(/^\[|\]$/g, "").split("','").map((a) => a.replace(/^'+|'+$/g, "")).map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), s = "";
-    for (let a of t) {
-      let u = a.charCodeAt(0);
-      u > 64 && u < 91 ? u = (u - 52) % 26 + 65 : u > 96 && u < 123 && (u = (u - 84) % 26 + 97), s += String.fromCharCode(u);
+    let r = t.replace(/^\[|\]$/g, "").split("','").map((i) => i.replace(/^'+|'+$/g, "")).map((i) => i.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), n = "";
+    for (let i of e) {
+      let l = i.charCodeAt(0);
+      l > 64 && l < 91 ? l = (l - 52) % 26 + 65 : l > 96 && l < 123 && (l = (l - 84) % 26 + 97), n += String.fromCharCode(l);
     }
-    for (let a of n)
-      s = s.replace(new RegExp(a, "g"), "_");
-    s = s.split("_").join("");
-    let i = _(s);
-    if (!i)
+    for (let i of r)
+      n = n.replace(new RegExp(i, "g"), "_");
+    n = n.split("_").join("");
+    let c = T(n);
+    if (!c)
       return null;
-    let c = "";
-    for (let a = 0; a < i.length; a++)
-      c += String.fromCharCode((i.charCodeAt(a) - 3 + 256) % 256);
-    let f = c.split("").reverse().join(""), l = _(f);
-    return l ? JSON.parse(l) : null;
-  } catch (r) {
-    return console.log("[VOE] voeDecode error:", r.message), null;
+    let s = "";
+    for (let i = 0; i < c.length; i++)
+      s += String.fromCharCode((c.charCodeAt(i) - 3 + 256) % 256);
+    let u = s.split("").reverse().join(""), a = T(u);
+    return a ? JSON.parse(a) : null;
+  } catch (o) {
+    return console.log("[VOE] voeDecode error:", o.message), null;
   }
 }
-function S(r) {
-  return d(this, arguments, function* (t, o = {}) {
-    return yield fetch(t, { method: "GET", headers: $({ "User-Agent": Z, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, o), redirect: "follow" });
+function k(o) {
+  return p(this, arguments, function* (e, t = {}) {
+    return yield fetch(e, { method: "GET", headers: g({ "User-Agent": Y, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, t), redirect: "follow" });
   });
 }
-function O(t) {
-  return d(this, null, function* () {
+function _(e) {
+  return p(this, null, function* () {
     try {
-      console.log(`[VOE] Resolviendo: ${t}`);
-      let o = yield S(t, { Referer: t });
-      if (!o.ok)
-        throw new Error(`HTTP ${o.status}`);
-      let r = yield o.text();
-      if (/permanentToken/i.test(r)) {
-        let l = r.match(/window\.location\.href\s*=\s*'([^']+)'/i);
-        if (l) {
-          console.log(`[VOE] Permanent token redirect -> ${l[1]}`);
-          let a = yield S(l[1], { Referer: t });
-          a.ok && (r = yield a.text());
+      console.log(`[VOE] Resolviendo: ${e}`);
+      let t = yield k(e, { Referer: e });
+      if (!t.ok)
+        throw new Error(`HTTP ${t.status}`);
+      let o = yield t.text();
+      if (/permanentToken/i.test(o)) {
+        let a = o.match(/window\.location\.href\s*=\s*'([^']+)'/i);
+        if (a) {
+          console.log(`[VOE] Permanent token redirect -> ${a[1]}`);
+          let i = yield k(a[1], { Referer: e });
+          i.ok && (o = yield i.text());
         }
       }
-      let n = r.match(/json">\s*\[\s*['"]([^'"]+)['"]\s*\]\s*<\/script>\s*<script[^>]*src=['"]([^'"]+)['"]/i);
-      if (n) {
-        let l = n[1], a = n[2].startsWith("http") ? n[2] : new URL(n[2], t).href;
-        console.log(`[VOE] Found encoded array + loader: ${a}`);
-        let u = yield S(a, { Referer: t }), h = u.ok ? yield u.text() : "", p = h.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || h.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
-        if (p) {
-          let g = ee(l, p[1]);
-          if (g && (g.source || g.direct_access_url)) {
-            let k = g.source || g.direct_access_url, I = m(k);
-            return console.log(`[VOE] URL encontrada: ${k.substring(0, 80)}...`), { url: k, quality: I, headers: { Referer: t } };
+      let r = o.match(/json">\s*\[\s*['"]([^'"]+)['"]\s*\]\s*<\/script>\s*<script[^>]*src=['"]([^'"]+)['"]/i);
+      if (r) {
+        let a = r[1], i = r[2].startsWith("http") ? r[2] : new URL(r[2], e).href;
+        console.log(`[VOE] Found encoded array + loader: ${i}`);
+        let l = yield k(i, { Referer: e }), d = l.ok ? yield l.text() : "", f = d.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || d.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
+        if (f) {
+          let h = Z(a, f[1]);
+          if (h && (h.source || h.direct_access_url)) {
+            let A = h.source || h.direct_access_url, V = m(A);
+            return console.log(`[VOE] URL encontrada: ${A.substring(0, 80)}...`), { url: A, quality: V, headers: { Referer: e } };
           }
         }
       }
-      let s = /(?:mp4|hls)'\s*:\s*'([^']+)'/gi, i = /(?:mp4|hls)"\s*:\s*"([^"]+)"/gi, c = [], f;
-      for (; (f = s.exec(r)) !== null; )
-        c.push(f);
-      for (; (f = i.exec(r)) !== null; )
-        c.push(f);
-      for (let l of c) {
-        let a = l[1];
-        if (!a)
+      let n = /(?:mp4|hls)'\s*:\s*'([^']+)'/gi, c = /(?:mp4|hls)"\s*:\s*"([^"]+)"/gi, s = [], u;
+      for (; (u = n.exec(o)) !== null; )
+        s.push(u);
+      for (; (u = c.exec(o)) !== null; )
+        s.push(u);
+      for (let a of s) {
+        let i = a[1];
+        if (!i)
           continue;
-        let u = a;
-        if (u.startsWith("aHR0"))
+        let l = i;
+        if (l.startsWith("aHR0"))
           try {
-            u = atob(u);
-          } catch (h) {
+            l = atob(l);
+          } catch (d) {
           }
-        return console.log(`[VOE] URL encontrada (fallback): ${u.substring(0, 80)}...`), { url: u, quality: m(u), headers: { Referer: t } };
+        return console.log(`[VOE] URL encontrada (fallback): ${l.substring(0, 80)}...`), { url: l, quality: m(l), headers: { Referer: e } };
       }
       return console.log("[VOE] No se encontr\xF3 URL"), null;
-    } catch (o) {
-      return console.log(`[VOE] Error: ${o.message}`), null;
+    } catch (t) {
+      return console.log(`[VOE] Error: ${t.message}`), null;
     }
   });
 }
-var w = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function te(t, o, r) {
-  let n = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", s = (i) => {
-    let c = 0;
-    for (let f = 0; f < i.length; f++) {
-      let l = n.indexOf(i[f]);
-      if (l === -1)
+var $ = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function ee(e, t, o) {
+  let r = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", n = (c) => {
+    let s = 0;
+    for (let u = 0; u < c.length; u++) {
+      let a = r.indexOf(c[u]);
+      if (a === -1)
         return NaN;
-      c = c * o + l;
+      s = s * t + a;
     }
-    return c;
+    return s;
   };
-  return t.replace(/\b([0-9a-zA-Z]+)\b/g, (i) => {
-    let c = s(i);
-    return isNaN(c) || c >= r.length ? i : r[c] && r[c] !== "" ? r[c] : i;
+  return e.replace(/\b([0-9a-zA-Z]+)\b/g, (c) => {
+    let s = n(c);
+    return isNaN(s) || s >= o.length ? c : o[s] && o[s] !== "" ? o[s] : c;
   });
 }
-function oe(t, o) {
-  let r = t.match(/\{[^{}]*"hls[234]"\s*:\s*"([^"]+)"[^{}]*\}/);
-  if (r)
+function te(e, t) {
+  let o = e.match(/\{[^{}]*"hls[234]"\s*:\s*"([^"]+)"[^{}]*\}/);
+  if (o)
     try {
-      let s = r[0].replace(/(\w+)\s*:/g, '"$1":'), i = JSON.parse(s), c = i.hls4 || i.hls3 || i.hls2;
-      if (c)
-        return c.startsWith("/") ? o + c : c;
-    } catch (s) {
-      let i = r[0].match(/"hls[234]"\s*:\s*"([^"]+\.m3u8[^"]*)"/);
-      if (i) {
-        let c = i[1];
-        return c.startsWith("/") ? o + c : c;
+      let n = o[0].replace(/(\w+)\s*:/g, '"$1":'), c = JSON.parse(n), s = c.hls4 || c.hls3 || c.hls2;
+      if (s)
+        return s.startsWith("/") ? t + s : s;
+    } catch (n) {
+      let c = o[0].match(/"hls[234]"\s*:\s*"([^"]+\.m3u8[^"]*)"/);
+      if (c) {
+        let s = c[1];
+        return s.startsWith("/") ? t + s : s;
       }
     }
-  let n = t.match(/["']([^"']{30,}\.m3u8[^"']*)['"]/i);
-  if (n) {
-    let s = n[1];
-    return s.startsWith("/") ? o + s : s;
+  let r = e.match(/["']([^"']{30,}\.m3u8[^"']*)['"]/i);
+  if (r) {
+    let n = r[1];
+    return n.startsWith("/") ? t + n : n;
   }
   return null;
 }
-var re = { "hglink.to": "vibuxer.com" };
-function x(t) {
-  return d(this, null, function* () {
-    var o;
+var oe = { "hglink.to": "vibuxer.com" };
+function v(e) {
+  return p(this, null, function* () {
+    var t;
     try {
-      let r = t;
-      for (let [a, u] of Object.entries(re))
-        if (r.includes(a)) {
-          r = r.replace(a, u);
+      let o = e;
+      for (let [i, l] of Object.entries(oe))
+        if (o.includes(i)) {
+          o = o.replace(i, l);
           break;
         }
-      let n = ((o = r.match(/^(https?:\/\/[^/]+)/)) == null ? void 0 : o[1]) || "https://hlswish.com";
-      console.log(`[HLSWish] Resolviendo: ${t}`), r !== t && console.log(`[HLSWish] \u2192 Mapped to: ${r}`);
-      let s = yield fetch(r, { headers: { "User-Agent": w, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
-      if (!s.ok)
-        throw new Error(`HTTP ${s.status}`);
-      let i = yield s.text(), c = i.match(/file\s*:\s*["']([^"']+)["']/i);
-      if (c) {
-        let a = c[1];
-        if (a.startsWith("/") && (a = n + a), a.includes("vibuxer.com/stream/")) {
-          console.log(`[HLSWish] Siguiendo redirect: ${a.substring(0, 80)}...`);
+      let r = ((t = o.match(/^(https?:\/\/[^/]+)/)) == null ? void 0 : t[1]) || "https://hlswish.com";
+      console.log(`[HLSWish] Resolviendo: ${e}`), o !== e && console.log(`[HLSWish] \u2192 Mapped to: ${o}`);
+      let n = yield fetch(o, { headers: { "User-Agent": $, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
+      if (!n.ok)
+        throw new Error(`HTTP ${n.status}`);
+      let c = yield n.text(), s = c.match(/file\s*:\s*["']([^"']+)["']/i);
+      if (s) {
+        let i = s[1];
+        if (i.startsWith("/") && (i = r + i), i.includes("vibuxer.com/stream/")) {
+          console.log(`[HLSWish] Siguiendo redirect: ${i.substring(0, 80)}...`);
           try {
-            let h = (yield fetch(a, { headers: { "User-Agent": w, Referer: n + "/" }, redirect: "follow" })).url;
-            h && h.includes(".m3u8") && (a = h);
-          } catch (u) {
+            let d = (yield fetch(i, { headers: { "User-Agent": $, Referer: r + "/" }, redirect: "follow" })).url;
+            d && d.includes(".m3u8") && (i = d);
+          } catch (l) {
           }
         }
-        return console.log(`[HLSWish] URL encontrada: ${a.substring(0, 80)}...`), { url: a, quality: yield R(a, { Referer: n + "/", "User-Agent": w }), headers: { "User-Agent": w, Referer: n + "/" } };
+        return console.log(`[HLSWish] URL encontrada: ${i.substring(0, 80)}...`), { url: i, quality: y(i), headers: { "User-Agent": $, Referer: r + "/" } };
       }
-      let f = i.match(/eval\(function\(p,a,c,k,e,[a-z]\)\{[^}]+\}\s*\('([\s\S]+?)',\s*(\d+),\s*(\d+),\s*'([\s\S]+?)'\.split\('\|'\)/);
-      if (f) {
-        let a = te(f[1], parseInt(f[2]), f[4].split("|")), u = oe(a, n);
-        if (u)
-          return console.log(`[HLSWish] URL encontrada: ${u.substring(0, 80)}...`), { url: u, quality: yield R(u, { Referer: n + "/", "User-Agent": w }), headers: { "User-Agent": w, Referer: n + "/" } };
+      let u = c.match(/eval\(function\(p,a,c,k,e,[a-z]\)\{[^}]+\}\s*\('([\s\S]+?)',\s*(\d+),\s*(\d+),\s*'([\s\S]+?)'\.split\('\|'\)/);
+      if (u) {
+        let i = ee(u[1], parseInt(u[2]), u[4].split("|")), l = te(i, r);
+        if (l)
+          return console.log(`[HLSWish] URL encontrada: ${l.substring(0, 80)}...`), { url: l, quality: y(l), headers: { "User-Agent": $, Referer: r + "/" } };
       }
-      let l = i.match(/https?:\/\/[^"'\s\\]+\.m3u8[^"'\s\\]*/i);
-      return l ? (console.log(`[HLSWish] URL encontrada: ${l[0].substring(0, 80)}...`), { url: l[0], quality: yield R(l[0], { Referer: n + "/", "User-Agent": w }), headers: { "User-Agent": w, Referer: n + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
-    } catch (r) {
-      return console.log(`[HLSWish] Error: ${r.message}`), null;
+      let a = c.match(/https?:\/\/[^"'\s\\]+\.m3u8[^"'\s\\]*/i);
+      return a ? (console.log(`[HLSWish] URL encontrada: ${a[0].substring(0, 80)}...`), { url: a[0], quality: y(a[0]), headers: { "User-Agent": $, Referer: r + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
+    } catch (o) {
+      return console.log(`[HLSWish] Error: ${o.message}`), null;
     }
   });
 }
-var N = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
-function q(t) {
-  return d(this, null, function* () {
+var O = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+function N(e) {
+  return p(this, null, function* () {
     try {
-      console.log(`[Vimeos] Resolviendo: ${t}`);
-      let o = yield fetch(t, { headers: { "User-Agent": N, Referer: "https://vimeos.net/", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow" });
-      if (!o.ok)
-        throw new Error(`HTTP ${o.status}`);
-      let n = (yield o.text()).match(/eval\(function\(p,a,c,k,e,[dr]\)\{[\s\S]+?\}\('([\s\S]+?)',(\d+),(\d+),'([\s\S]+?)'\.split\('\|'\)/);
-      if (n) {
-        let s = n[1], i = parseInt(n[2]), c = n[4].split("|"), f = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", l = (h) => {
-          let p = 0;
-          for (let g = 0; g < h.length; g++)
-            p = p * i + f.indexOf(h[g]);
-          return p;
-        }, u = s.replace(/\b(\w+)\b/g, (h) => {
-          let p = l(h);
-          return c[p] && c[p] !== "" ? c[p] : h;
+      console.log(`[Vimeos] Resolviendo: ${e}`);
+      let t = yield fetch(e, { headers: { "User-Agent": O, Referer: "https://vimeos.net/", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow" });
+      if (!t.ok)
+        throw new Error(`HTTP ${t.status}`);
+      let r = (yield t.text()).match(/eval\(function\(p,a,c,k,e,[dr]\)\{[\s\S]+?\}\('([\s\S]+?)',(\d+),(\d+),'([\s\S]+?)'\.split\('\|'\)/);
+      if (r) {
+        let n = r[1], c = parseInt(r[2]), s = r[4].split("|"), u = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", a = (d) => {
+          let f = 0;
+          for (let h = 0; h < d.length; h++)
+            f = f * c + u.indexOf(d[h]);
+          return f;
+        }, l = n.replace(/\b(\w+)\b/g, (d) => {
+          let f = a(d);
+          return s[f] && s[f] !== "" ? s[f] : d;
         }).match(/["']([^"']+\.m3u8[^"']*)['"]/i);
-        if (u) {
-          let h = u[1], p = { "User-Agent": N, Referer: "https://vimeos.net/" }, g = m(h);
-          return console.log(`[Vimeos] URL encontrada: ${h.substring(0, 80)}...`), { url: h, quality: g, headers: p };
+        if (l) {
+          let d = l[1], f = { "User-Agent": O, Referer: "https://vimeos.net/" }, h = m(d);
+          return console.log(`[Vimeos] URL encontrada: ${d.substring(0, 80)}...`), { url: d, quality: h, headers: f };
         }
       }
       return console.log("[Vimeos] No se encontr\xF3 URL"), null;
-    } catch (o) {
-      return console.log(`[Vimeos] Error: ${o.message}`), null;
+    } catch (t) {
+      return console.log(`[Vimeos] Error: ${t.message}`), null;
     }
   });
 }
-var ne = "439c478a771f35c05022f9feabcca01c", E = "https://hackstore2.com", b = `${E}/api/rest`, se = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", ce = { "User-Agent": se, Accept: "application/json", Referer: `${E}/`, Origin: E }, ie = { "goodstream.one": T, "hlswish.com": x, "streamwish.com": x, "streamwish.to": x, "strwish.com": x, "voe.sx": O, "vimeos.net": q };
-function ae(t) {
-  for (let [o, r] of Object.entries(ie))
-    if (t.includes(o))
-      return r;
+var re = "439c478a771f35c05022f9feabcca01c", S = "https://hackstore2.com", E = `${S}/api/rest`, ne = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", se = { "User-Agent": ne, Accept: "application/json", Referer: `${S}/`, Origin: S }, ce = { "goodstream.one": L, "hlswish.com": v, "streamwish.com": v, "streamwish.to": v, "strwish.com": v, "voe.sx": _, "vimeos.net": N };
+function ie(e) {
+  for (let [t, o] of Object.entries(ce))
+    if (e.includes(t))
+      return o;
   return null;
 }
-function A(t) {
-  return d(this, null, function* () {
-    let o = yield fetch(t, { headers: ce, redirect: "follow" });
-    if (!o.ok)
-      throw new Error(`HTTP ${o.status}`);
-    return o.json();
+function R(e) {
+  return p(this, null, function* () {
+    let t = yield fetch(e, { headers: se, redirect: "follow" });
+    if (!t.ok)
+      throw new Error(`HTTP ${t.status}`);
+    return t.json();
   });
 }
-function le(t = "") {
-  return t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+function ae(e = "") {
+  return e.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 }
-function V(t, o) {
-  let r = le(t).replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
-  return o ? `${r}-${o}` : r;
+function q(e, t) {
+  let o = ae(e).replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+  return t ? `${o}-${t}` : o;
 }
-function ue(t) {
-  return t.includes("goodstream") ? "GoodStream" : t.includes("hlswish") || t.includes("streamwish") ? "StreamWish" : t.includes("voe") ? "VOE" : t.includes("vimeos") ? "Vimeos" : t.includes("filemoon") ? "Filemoon" : "Online";
+function le(e) {
+  return e.includes("goodstream") ? "GoodStream" : e.includes("hlswish") || e.includes("streamwish") ? "StreamWish" : e.includes("voe") ? "VOE" : e.includes("vimeos") ? "Vimeos" : e.includes("filemoon") ? "Filemoon" : "Online";
 }
-function fe(t, o) {
-  return d(this, null, function* () {
-    var i;
-    let n = `https://api.themoviedb.org/3/${o === "movie" ? "movie" : "tv"}/${t}?api_key=${ne}&language=es-MX`, s = yield A(n);
-    return { title: o === "movie" ? s.title : s.name, year: (i = o === "movie" ? s.release_date : s.first_air_date) == null ? void 0 : i.slice(0, 4), seasons: s.number_of_seasons || 0 };
+function ue(e, t) {
+  return p(this, null, function* () {
+    var c;
+    let r = `https://api.themoviedb.org/3/${t === "movie" ? "movie" : "tv"}/${e}?api_key=${re}&language=es-MX`, n = yield R(r);
+    return { title: t === "movie" ? n.title : n.name, year: (c = t === "movie" ? n.release_date : n.first_air_date) == null ? void 0 : c.slice(0, 4), seasons: n.number_of_seasons || 0 };
   });
 }
-function pe(t) {
-  return d(this, null, function* () {
-    var r;
-    let o = yield A(`${b}/single?post_name=${t}&post_type=movies`);
-    return ((r = o == null ? void 0 : o.data) == null ? void 0 : r._id) || null;
+function fe(e) {
+  return p(this, null, function* () {
+    var o;
+    let t = yield R(`${E}/single?post_name=${e}&post_type=movies`);
+    return ((o = t == null ? void 0 : t.data) == null ? void 0 : o._id) || null;
   });
 }
-function de(t) {
-  return d(this, null, function* () {
-    var r, n;
-    let o = yield A(`${b}/single?post_name=${t}&post_type=episodes`);
-    return ((n = (r = o == null ? void 0 : o.data) == null ? void 0 : r.episode) == null ? void 0 : n._id) || null;
+function pe(e) {
+  return p(this, null, function* () {
+    var o, r;
+    let t = yield R(`${E}/single?post_name=${e}&post_type=episodes`);
+    return ((r = (o = t == null ? void 0 : t.data) == null ? void 0 : o.episode) == null ? void 0 : r._id) || null;
   });
 }
-function he(t) {
-  return d(this, null, function* () {
-    let o = yield A(`${b}/player?post_id=${t}`);
-    return (o == null ? void 0 : o.data) || [];
+function de(e) {
+  return p(this, null, function* () {
+    let t = yield R(`${E}/player?post_id=${e}`);
+    return (t == null ? void 0 : t.data) || [];
   });
 }
-function ge(t) {
-  return d(this, null, function* () {
+function he(e) {
+  return p(this, null, function* () {
     try {
-      let o = ae(t.url);
-      if (!o)
-        return console.log(`[Hackstore] No resolver: ${t.url}`), null;
-      console.log(`[Hackstore] Resolviendo: ${t.url}`);
-      let r = yield o(t.url);
-      if (!(r != null && r.url))
+      let t = ie(e.url);
+      if (!t)
+        return console.log(`[Hackstore] No resolver: ${e.url}`), null;
+      console.log(`[Hackstore] Resolviendo: ${e.url}`);
+      let o = yield t(e.url);
+      if (!(o != null && o.url))
         return null;
-      let n = r.quality || "Unknown";
-      return { name: "Hackstore", title: `${n} \xB7 ${t.lang} \xB7 ${ue(t.url)}`, quality: n, url: r.url, headers: r.headers || {} };
-    } catch (o) {
-      return console.log(`[Hackstore] Error resolver: ${o.message}`), null;
+      let r = o.quality || "Unknown";
+      return { name: "Hackstore", title: `${r} \xB7 ${e.lang} \xB7 ${le(e.url)}`, quality: r, url: o.url, headers: o.headers || {} };
+    } catch (t) {
+      return console.log(`[Hackstore] Error resolver: ${t.message}`), null;
     }
   });
 }
-function me(t, o, r, n) {
-  return d(this, null, function* () {
-    let s = Date.now();
-    console.log(`[Hackstore] Buscando TMDB ${t} (${o})` + (r ? ` S${r}E${n}` : ""));
+function me(e, t, o, r) {
+  return p(this, null, function* () {
+    let n = Date.now();
+    console.log(`[Hackstore] Buscando TMDB ${e} (${t})` + (o ? ` S${o}E${r}` : ""));
     try {
-      let i = yield fe(t, o);
-      if (!i)
+      let c = yield ue(e, t);
+      if (!c)
         return [];
-      let c, f;
-      if (o === "movie" ? (c = V(i.title, i.year), console.log(`[Hackstore] Slug pel\xEDcula: ${c}`), f = yield pe(c)) : (c = `${V(i.title)}-temporada-${r}-episodio-${n}`, console.log(`[Hackstore] Slug episodio: ${c}`), f = yield de(c)), !f)
+      let s, u;
+      if (t === "movie" ? (s = q(c.title, c.year), console.log(`[Hackstore] Slug pel\xEDcula: ${s}`), u = yield fe(s)) : (s = `${q(c.title)}-temporada-${o}-episodio-${r}`, console.log(`[Hackstore] Slug episodio: ${s}`), u = yield pe(s)), !u)
         return console.log("[Hackstore] No se encontr\xF3 ID"), [];
-      console.log(`[Hackstore] Post ID: ${f}`);
-      let l = yield he(f);
-      if (!l.length)
+      console.log(`[Hackstore] Post ID: ${u}`);
+      let a = yield de(u);
+      if (!a.length)
         return console.log("[Hackstore] No embeds"), [];
-      console.log(`[Hackstore] Embeds encontrados: ${l.length}`);
-      let u = (yield Promise.allSettled(l.map((p) => {
-        let g = M($({}, p), { lang: p.lang || "LAT" });
-        return ge(g);
-      }))).filter((p) => p.status === "fulfilled" && p.value !== null).map((p) => p.value), h = ((Date.now() - s) / 1e3).toFixed(2);
-      return console.log(`[Hackstore] \u2713 ${u.length} streams encontrados (${h}s)`), u;
-    } catch (i) {
-      return console.log(`[Hackstore] Error: ${i.message}`), [];
+      console.log(`[Hackstore] Embeds encontrados: ${a.length}`);
+      let l = (yield Promise.allSettled(a.map((f) => {
+        let h = U(g({}, f), { lang: f.lang || "LAT" });
+        return he(h);
+      }))).filter((f) => f.status === "fulfilled" && f.value !== null).map((f) => f.value), d = ((Date.now() - n) / 1e3).toFixed(2);
+      return console.log(`[Hackstore] \u2713 ${l.length} streams encontrados (${d}s)`), l;
+    } catch (c) {
+      return console.log(`[Hackstore] Error: ${c.message}`), [];
     }
   });
 }
