@@ -13,7 +13,7 @@ Addon de providers de contenido en español para **Nuvio Media Hub**. Proporcion
 | `embed69` | ✅ | ✅ |
 | `zoowomaniacos` | ✅ | ❌ |
 | `xupalace` | ✅ | ✅ |
-| `seriesmetro` | ❌ | ✅ |
+| `seriesmetro` | ✅ | ✅ |
 | `peliserieshoy` | ✅ | ✅ |
 | `detodopeliculas` | ✅ | ✅ |
 | `hackstore` | ✅ | ✅ |
