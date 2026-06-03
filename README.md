@@ -7,7 +7,7 @@ Addon de providers de contenido en español para **Nuvio Media Hub**. Proporcion
 ## Providers incluidos
 
 | Provider | Películas | Series |
-|---|---|---|---|
+|---|---|---|
 | `lamovie` | ✅ | ✅ |
 | `cinecalidad` | ✅ | ❌ |
 | `embed69` | ✅ | ✅ |
