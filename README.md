@@ -1,46 +1,70 @@
-# LaMovie Provider para Nuvio
+# Nuvio-Providers-Latino
 
-Provider que obtiene streams de LaMovie con resolvers para GoodStream, StreamWish, VOE y Filemoon.
+Addon de providers de contenido en español para **Nuvio Media Hub**. Proporciona streams de películas y series desde fuentes latinoamericanas y españolas, con soporte completo para FireTV (Hermes JS engine).
 
-## Setup
+---
+
+## Providers incluidos
+
+| Provider | Películas | Series |
+|---|---|---|---|
+| `lamovie` | ✅ | ✅ |
+| `cinecalidad` | ✅ | ❌ |
+| `embed69` | ✅ | ✅ |
+| `zoowomaniacos` | ✅ | ❌ |
+| `xupalace` | ✅ | ✅ |
+| `seriesmetro` | ❌ | ✅ |
+| `peliserieshoy` | ✅ | ✅ |
+| `detodopeliculas` | ✅ | ✅ |
+| `hackstore` | ✅ | ✅ |
+| `seriesflix` | ❌ | ✅ |
+
+---
+
+## Resolvers soportados
+
+- **VOE** (`voe.sx`)
+- **GoodStream** (`goodstream.one`)
+- **Vimeos** (`vimeos.net`)
+- **HLSWish / StreamWish** (`hlswish.com`, `streamwish.com`, `streamwish.to`, `strwish.com`)
+- **VidHide** (`vidhide.com`)
+- **Fastream** (`fastream.to`)
+- **Nupload** (`nupload.me`)
+- **OkRu** (`ok.ru`)
+- **GDTvid** (`gdtvid.p2pplay.pro`)
+
+---
+
+## Testing
 
 ```bash
-npm install
-node build.js
+node --dns-result-order=ipv4first test.js [tmdbId] [tipo] [temporada] [episodio] [provider]
 ```
 
-## Probar localmente
+### Ejemplos
 
 ```bash
-# Primero construye
-node build.js
+# Película
+node --dns-result-order=ipv4first test.js 550 movie null null lamovie
 
-# Luego prueba (Fight Club)
-node test.js 550 movie
+# Serie con temporada y episodio
+node --dns-result-order=ipv4first test.js 1402 tv 3 5 seriesmetro
 
-# Serie (Breaking Bad S1E1)
-node test.js 1396 tv 1 1
+# Provider por defecto (lamovie)
+node --dns-result-order=ipv4first test.js 157336 movie
 ```
 
-## Cargar en Nuvio (modo desarrollo)
+> El flag `--dns-result-order=ipv4first` es necesario para evitar problemas de resolución DNS en Windows.
 
-1. Ejecuta `npm start` en este directorio
-2. En Nuvio app (build de desarrollo) → Settings → Developer → Plugin Tester
-3. Carga: `http://TU_IP:3000/providers/lamovie.js`
+---
 
-## Resolvers incluidos
+## Compatibilidad con Nuvio / FireTV
 
-| Servidor | Estado |
-|---|---|
-| GoodStream | ✅ Estable |
-| StreamWish / HLSWish | ✅ Funcional |
-| VOE | ✅ ~70% de casos |
-| Filemoon | ⚠️ Requiere test en Hermes (usa AES-256-GCM con crypto-js) |
-| vimeos.net | ⏭ Ignorado (Cloudflare anti-bot) |
+Todos los providers están diseñados para funcionar con el engine **Hermes** de React Native usado en FireTV. Las restricciones aplicadas:
 
-## ⚠️ Nota sobre Filemoon
-
-Filemoon usa AES-256-GCM. La implementación usa `crypto-js` con emulación de CTR (núcleo de GCM).
-Funciona en Node.js. **Necesita test en el Plugin Tester de Nuvio** para confirmar compatibilidad con Hermes.
-
-Si falla en Hermes, los otros 3 resolvers (GoodStream, StreamWish, VOE) siguen funcionando.
+- Sin `axios` — todo usa `fetch` nativo
+- Sin `AbortController` ni timeouts por signal
+- Sin `Buffer` de Node.js — se usa `atob`/`btoa` nativo
+- Sin `require()` dinámico — imports estáticos en todos los resolvers
+- Build en formato CJS con target `es2016` vía esbuild
+- `XMLHttpRequest` como fallback para requests que causan OOM en Hermes (gdtvid, nupload)
