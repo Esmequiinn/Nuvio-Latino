@@ -39,9 +39,9 @@ var d = (e, t, n) => new Promise((r, o) => {
 var pe = {};
 I(pe, { getStreams: () => de });
 module.exports = B(pe);
-var K = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", w = { vimeos: { h: "720p", n: "480p" }, goodstream: { x: "1080p", h: "720p", n: "480p", l: "360p" }, vidhide: { n: "720p", l: "480p" }, streamwish: { x: "1080p", h: "1080p", n: "720p", l: "480p" }, voe: { n: "720p", l: "360p" } }, j = ["x", "o", "h", "n", "l"];
+var K = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", x = { vimeos: { h: "720p", n: "480p" }, goodstream: { x: "1080p", h: "720p", n: "480p", l: "360p" }, vidhide: { n: "720p", l: "480p" }, streamwish: { x: "1080p", h: "1080p", n: "720p", l: "480p" }, voe: { n: "720p", l: "360p" } }, j = ["x", "o", "h", "n", "l"];
 function G(e) {
-  return e.includes("vimeos") ? w.vimeos : e.includes("goodstream") ? w.goodstream : e.includes("cloudwindow-route") ? w.voe : e.includes("minochinos") || e.includes("vidhide") || e.includes("dintezuvio") || e.includes("dramiyos") ? w.vidhide : e.includes("premilkyway") || e.includes("hlswish") || e.includes("vibuxer") || e.includes("streamwish") ? w.streamwish : null;
+  return e.includes("vimeos") ? x.vimeos : e.includes("goodstream") ? x.goodstream : e.includes("cloudwindow-route") ? x.voe : e.includes("minochinos") || e.includes("vidhide") || e.includes("dintezuvio") || e.includes("dramiyos") ? x.vidhide : e.includes("premilkyway") || e.includes("hlswish") || e.includes("vibuxer") || e.includes("streamwish") ? x.streamwish : null;
 }
 function R(n) {
   return d(this, arguments, function* (e, t = {}) {
@@ -139,7 +139,7 @@ function J(e, t) {
     return console.log("[VOE] voeDecode error:", n.message), null;
   }
 }
-function b(n) {
+function A(n) {
   return d(this, arguments, function* (e, t = {}) {
     return yield fetch(e, { method: "GET", headers: S({ "User-Agent": X, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, t), redirect: "follow" });
   });
@@ -148,7 +148,7 @@ function T(e) {
   return d(this, null, function* () {
     try {
       console.log(`[VOE] Resolviendo: ${e}`);
-      let t = yield b(e, { Referer: e });
+      let t = yield A(e, { Referer: e });
       if (!t.ok)
         throw new Error(`HTTP ${t.status}`);
       let n = yield t.text();
@@ -156,7 +156,7 @@ function T(e) {
         let c = n.match(/window\.location\.href\s*=\s*'([^']+)'/i);
         if (c) {
           console.log(`[VOE] Permanent token redirect -> ${c[1]}`);
-          let a = yield b(c[1], { Referer: e });
+          let a = yield A(c[1], { Referer: e });
           a.ok && (n = yield a.text());
         }
       }
@@ -164,12 +164,12 @@ function T(e) {
       if (r) {
         let c = r[1], a = r[2].startsWith("http") ? r[2] : new URL(r[2], e).href;
         console.log(`[VOE] Found encoded array + loader: ${a}`);
-        let l = yield b(a, { Referer: e }), h = l.ok ? yield l.text() : "", f = h.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || h.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
+        let l = yield A(a, { Referer: e }), h = l.ok ? yield l.text() : "", f = h.match(/(\[(?:'[^']{1,10}'[\s,]*){4,12}\])/i) || h.match(/(\[(?:"[^"]{1,10}"[,\s]*){4,12}\])/i);
         if (f) {
           let p = J(c, f[1]);
           if (p && (p.source || p.direct_access_url)) {
-            let $ = p.source || p.direct_access_url, g = m($);
-            return console.log(`[VOE] URL encontrada: ${$.substring(0, 80)}...`), { url: $, quality: g, headers: { Referer: e } };
+            let $ = p.source || p.direct_access_url, w = m($);
+            return console.log(`[VOE] URL encontrada: ${$.substring(0, 80)}...`), { url: $, quality: w, headers: { Referer: e } };
           }
         }
       }
@@ -196,7 +196,7 @@ function T(e) {
     }
   });
 }
-var x = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+var g = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
 function Z(e, t, n) {
   let r = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", o = (s) => {
     let i = 0;
@@ -247,7 +247,7 @@ function y(e) {
         }
       let r = ((t = n.match(/^(https?:\/\/[^/]+)/)) == null ? void 0 : t[1]) || "https://hlswish.com";
       console.log(`[HLSWish] Resolviendo: ${e}`), n !== e && console.log(`[HLSWish] \u2192 Mapped to: ${n}`);
-      let o = yield fetch(n, { headers: { "User-Agent": x, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
+      let o = yield fetch(n, { headers: { "User-Agent": g, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
       if (!o.ok)
         throw new Error(`HTTP ${o.status}`);
       let s = yield o.text(), i = s.match(/file\s*:\s*["']([^"']+)["']/i);
@@ -256,21 +256,21 @@ function y(e) {
         if (a.startsWith("/") && (a = r + a), a.includes("vibuxer.com/stream/")) {
           console.log(`[HLSWish] Siguiendo redirect: ${a.substring(0, 80)}...`);
           try {
-            let h = (yield fetch(a, { headers: { "User-Agent": x, Referer: r + "/" }, redirect: "follow" })).url;
+            let h = (yield fetch(a, { headers: { "User-Agent": g, Referer: r + "/" }, redirect: "follow" })).url;
             h && h.includes(".m3u8") && (a = h);
           } catch (l) {
           }
         }
-        return console.log(`[HLSWish] URL encontrada: ${a.substring(0, 80)}...`), { url: a, quality: yield R(a, { Referer: r + "/" }), headers: { "User-Agent": x, Referer: r + "/" } };
+        return console.log(`[HLSWish] URL encontrada: ${a.substring(0, 80)}...`), { url: a, quality: yield R(a, { Referer: r + "/", "User-Agent": g }), headers: { "User-Agent": g, Referer: r + "/" } };
       }
       let u = s.match(/eval\(function\(p,a,c,k,e,[a-z]\)\{[^}]+\}\s*\('([\s\S]+?)',\s*(\d+),\s*(\d+),\s*'([\s\S]+?)'\.split\('\|'\)/);
       if (u) {
         let a = Z(u[1], parseInt(u[2]), u[4].split("|")), l = Y(a, r);
         if (l)
-          return console.log(`[HLSWish] URL encontrada: ${l.substring(0, 80)}...`), { url: l, quality: yield R(l, { Referer: r + "/" }), headers: { "User-Agent": x, Referer: r + "/" } };
+          return console.log(`[HLSWish] URL encontrada: ${l.substring(0, 80)}...`), { url: l, quality: yield R(l, { Referer: r + "/", "User-Agent": g }), headers: { "User-Agent": g, Referer: r + "/" } };
       }
       let c = s.match(/https?:\/\/[^"'\s\\]+\.m3u8[^"'\s\\]*/i);
-      return c ? (console.log(`[HLSWish] URL encontrada: ${c[0].substring(0, 80)}...`), { url: c[0], quality: yield R(c[0], { Referer: r + "/" }), headers: { "User-Agent": x, Referer: r + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
+      return c ? (console.log(`[HLSWish] URL encontrada: ${c[0].substring(0, 80)}...`), { url: c[0], quality: yield R(c[0], { Referer: r + "/", "User-Agent": g }), headers: { "User-Agent": g, Referer: r + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
     } catch (n) {
       return console.log(`[HLSWish] Error: ${n.message}`), null;
     }
@@ -306,7 +306,7 @@ function O(e) {
     }
   });
 }
-var te = "439c478a771f35c05022f9feabcca01c", ne = "https://www.cinecalidad.vg", oe = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", A = { "User-Agent": oe, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9", Connection: "keep-alive", "Upgrade-Insecure-Requests": "1", Referer: "https://www.cinecalidad.vg/" }, q = { "goodstream.one": k, "hlswish.com": y, "streamwish.com": y, "streamwish.to": y, "strwish.com": y, "voe.sx": T, "vimeos.net": O }, re = (e) => e.includes("goodstream") ? "GoodStream" : e.includes("hlswish") || e.includes("streamwish") || e.includes("strwish") ? "StreamWish" : e.includes("voe.sx") ? "VOE" : e.includes("filemoon") ? "Filemoon" : e.includes("vimeos") ? "Vimeos" : "Online", se = (e) => {
+var te = "439c478a771f35c05022f9feabcca01c", ne = "https://www.cinecalidad.vg", oe = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", E = { "User-Agent": oe, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9", Connection: "keep-alive", "Upgrade-Insecure-Requests": "1", Referer: "https://www.cinecalidad.vg/" }, q = { "goodstream.one": k, "hlswish.com": y, "streamwish.com": y, "streamwish.to": y, "strwish.com": y, "voe.sx": T, "vimeos.net": O }, re = (e) => e.includes("goodstream") ? "GoodStream" : e.includes("hlswish") || e.includes("streamwish") || e.includes("strwish") ? "StreamWish" : e.includes("voe.sx") ? "VOE" : e.includes("filemoon") ? "Filemoon" : e.includes("vimeos") ? "Vimeos" : "Online", se = (e) => {
   if (!e || !e.startsWith("http"))
     return null;
   for (let t in q)
@@ -323,14 +323,14 @@ function ie(e) {
 }
 function ae(e, t) {
   return d(this, null, function* () {
-    let n = ["es-MX", "es-ES", "en-US"], r = yield Promise.all(n.map((g) => fetch(`https://api.themoviedb.org/3/${t}/${e}?api_key=${te}&language=${g}`, { headers: A }).then((_) => _.json()).catch(() => null))), [o, s, i] = r, u = o || s || i;
+    let n = ["es-MX", "es-ES", "en-US"], r = yield Promise.all(n.map((w) => fetch(`https://api.themoviedb.org/3/${t}/${e}?api_key=${te}&language=${w}`, { headers: E }).then((_) => _.json()).catch(() => null))), [o, s, i] = r, u = o || s || i;
     if (!u)
       return null;
-    let c = (g) => g ? t === "movie" ? g.title : g.name : null, a = c(o), l = c(s), h = c(i), f = t === "movie" ? u.original_title : u.original_name, p = (u.release_date || u.first_air_date || "").substring(0, 4);
+    let c = (w) => w ? t === "movie" ? w.title : w.name : null, a = c(o), l = c(s), h = c(i), f = t === "movie" ? u.original_title : u.original_name, p = (u.release_date || u.first_air_date || "").substring(0, 4);
     return console.log(`[CineCalidad] TMDB: "${a || l || h}" | ES: "${l}" | Original: "${f}"`), { title: a || l || h, titleEs: l, originalTitle: f, year: p };
   });
 }
-function E(e) {
+function b(e) {
   return e.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
 }
 function ce(e) {
@@ -343,7 +343,7 @@ function le(e, t) {
     for (let r of n) {
       let o = `${ne}/pelicula/${r}/`;
       try {
-        let s = yield fetch(o, { headers: A }).then((u) => u.text()), i = ce(s);
+        let s = yield fetch(o, { headers: E }).then((u) => u.text()), i = ce(s);
         if (!i || !t || i === t)
           return console.log(`[CineCalidad] \u2713 Slug directo: /pelicula/${r}/ (${i || "?"})`), { url: o, html: s };
         console.log(`[CineCalidad] A\xF1o no coincide: esperado ${t}, encontrado ${i} en /pelicula/${r}/`);
@@ -368,7 +368,7 @@ function fe(e) {
       let u = new Set(s);
       return i.length > 0 && (yield Promise.allSettled(i.map((c) => d(this, null, function* () {
         try {
-          let a = yield fetch(c, { headers: A }).then((f) => f.text()), l = "", h = a.match(/id="btn_enlace"[^>]*>[\s\S]*?href="([^"]+)"/);
+          let a = yield fetch(c, { headers: E }).then((f) => f.text()), l = "", h = a.match(/id="btn_enlace"[^>]*>[\s\S]*?href="([^"]+)"/);
           if (h && (l = h[1]), !l) {
             let f = a.match(/<iframe[^>]+src="([^"]+)"/);
             f && (l = f[1]);
@@ -407,7 +407,7 @@ function de(e, t, n, r) {
       let s = yield ae(e, t);
       if (!s)
         return [];
-      let i = [...new Set([s.title && E(s.title), s.titleEs && E(s.titleEs), s.originalTitle && E(s.originalTitle)].filter(Boolean))], u = null;
+      let i = [...new Set([s.title && b(s.title), s.titleEs && b(s.titleEs), s.originalTitle && b(s.originalTitle)].filter(Boolean))], u = null;
       try {
         u = yield Promise.any(i.map((f) => le(f, s.year).then((p) => {
           if (!p)

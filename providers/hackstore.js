@@ -1,20 +1,20 @@
-var x = Object.defineProperty, I = Object.defineProperties, P = Object.getOwnPropertyDescriptor, z = Object.getOwnPropertyDescriptors, D = Object.getOwnPropertyNames, W = Object.getOwnPropertySymbols;
-var H = Object.prototype.hasOwnProperty, j = Object.prototype.propertyIsEnumerable;
-var b = (e, t, o) => t in e ? x(e, t, { enumerable: true, configurable: true, writable: true, value: o }) : e[t] = o, g = (e, t) => {
+var x = Object.defineProperty, I = Object.defineProperties, P = Object.getOwnPropertyDescriptor, z = Object.getOwnPropertyDescriptors, D = Object.getOwnPropertyNames, U = Object.getOwnPropertySymbols;
+var b = Object.prototype.hasOwnProperty, j = Object.prototype.propertyIsEnumerable;
+var W = (e, t, o) => t in e ? x(e, t, { enumerable: true, configurable: true, writable: true, value: o }) : e[t] = o, w = (e, t) => {
   for (var o in t || (t = {}))
-    H.call(t, o) && b(e, o, t[o]);
-  if (W)
-    for (var o of W(t))
-      j.call(t, o) && b(e, o, t[o]);
+    b.call(t, o) && W(e, o, t[o]);
+  if (U)
+    for (var o of U(t))
+      j.call(t, o) && W(e, o, t[o]);
   return e;
-}, U = (e, t) => I(e, z(t));
+}, H = (e, t) => I(e, z(t));
 var C = (e, t) => {
   for (var o in t)
     x(e, o, { get: t[o], enumerable: true });
 }, K = (e, t, o, r) => {
   if (t && typeof t == "object" || typeof t == "function")
     for (let n of D(t))
-      !H.call(e, n) && n !== o && x(e, n, { get: () => t[n], enumerable: !(r = P(t, n)) || r.enumerable });
+      !b.call(e, n) && n !== o && x(e, n, { get: () => t[n], enumerable: !(r = P(t, n)) || r.enumerable });
   return e;
 };
 var Q = (e) => K(x({}, "__esModule", { value: true }), e);
@@ -37,9 +37,9 @@ var p = (e, t, o) => new Promise((r, n) => {
 var ge = {};
 C(ge, { getStreams: () => me });
 module.exports = Q(ge);
-var B = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", w = { vimeos: { h: "720p", n: "480p" }, goodstream: { x: "1080p", h: "720p", n: "480p", l: "360p" }, vidhide: { n: "720p", l: "480p" }, streamwish: { x: "1080p", h: "1080p", n: "720p", l: "480p" }, voe: { n: "720p", l: "360p" } }, G = ["x", "o", "h", "n", "l"];
+var B = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36", $ = { vimeos: { h: "720p", n: "480p" }, goodstream: { x: "1080p", h: "720p", n: "480p", l: "360p" }, vidhide: { n: "720p", l: "480p" }, streamwish: { x: "1080p", h: "1080p", n: "720p", l: "480p" }, voe: { n: "720p", l: "360p" } }, G = ["x", "o", "h", "n", "l"];
 function F(e) {
-  return e.includes("vimeos") ? w.vimeos : e.includes("goodstream") ? w.goodstream : e.includes("cloudwindow-route") ? w.voe : e.includes("minochinos") || e.includes("vidhide") || e.includes("dintezuvio") || e.includes("dramiyos") ? w.vidhide : e.includes("premilkyway") || e.includes("hlswish") || e.includes("vibuxer") || e.includes("streamwish") ? w.streamwish : null;
+  return e.includes("vimeos") ? $.vimeos : e.includes("goodstream") ? $.goodstream : e.includes("cloudwindow-route") ? $.voe : e.includes("minochinos") || e.includes("vidhide") || e.includes("dintezuvio") || e.includes("dramiyos") ? $.vidhide : e.includes("premilkyway") || e.includes("hlswish") || e.includes("vibuxer") || e.includes("streamwish") ? $.streamwish : null;
 }
 function y(o) {
   return p(this, arguments, function* (e, t = {}) {
@@ -69,7 +69,7 @@ function X(e, t) {
 function J(o) {
   return p(this, arguments, function* (e, t = {}) {
     try {
-      let n = yield (yield fetch(e, { headers: g({ "User-Agent": B }, t), redirect: "follow" })).text();
+      let n = yield (yield fetch(e, { headers: w({ "User-Agent": B }, t), redirect: "follow" })).text();
       if (!n.includes("#EXT-X-STREAM-INF")) {
         let u = e.match(/[_-](\d{3,4})p/);
         return u ? `${u[1]}p` : "Unknown";
@@ -139,7 +139,7 @@ function Z(e, t) {
 }
 function k(o) {
   return p(this, arguments, function* (e, t = {}) {
-    return yield fetch(e, { method: "GET", headers: g({ "User-Agent": Y, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, t), redirect: "follow" });
+    return yield fetch(e, { method: "GET", headers: w({ "User-Agent": Y, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" }, t), redirect: "follow" });
   });
 }
 function _(e) {
@@ -194,7 +194,7 @@ function _(e) {
     }
   });
 }
-var $ = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+var g = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
 function ee(e, t, o) {
   let r = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", n = (c) => {
     let s = 0;
@@ -245,7 +245,7 @@ function v(e) {
         }
       let r = ((t = o.match(/^(https?:\/\/[^/]+)/)) == null ? void 0 : t[1]) || "https://hlswish.com";
       console.log(`[HLSWish] Resolviendo: ${e}`), o !== e && console.log(`[HLSWish] \u2192 Mapped to: ${o}`);
-      let n = yield fetch(o, { headers: { "User-Agent": $, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
+      let n = yield fetch(o, { headers: { "User-Agent": g, Referer: "https://embed69.org/", Origin: "https://embed69.org", Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "es-MX,es;q=0.9" }, redirect: "follow" });
       if (!n.ok)
         throw new Error(`HTTP ${n.status}`);
       let c = yield n.text(), s = c.match(/file\s*:\s*["']([^"']+)["']/i);
@@ -254,21 +254,21 @@ function v(e) {
         if (i.startsWith("/") && (i = r + i), i.includes("vibuxer.com/stream/")) {
           console.log(`[HLSWish] Siguiendo redirect: ${i.substring(0, 80)}...`);
           try {
-            let d = (yield fetch(i, { headers: { "User-Agent": $, Referer: r + "/" }, redirect: "follow" })).url;
+            let d = (yield fetch(i, { headers: { "User-Agent": g, Referer: r + "/" }, redirect: "follow" })).url;
             d && d.includes(".m3u8") && (i = d);
           } catch (l) {
           }
         }
-        return console.log(`[HLSWish] URL encontrada: ${i.substring(0, 80)}...`), { url: i, quality: yield y(i, { Referer: r + "/" }), headers: { "User-Agent": $, Referer: r + "/" } };
+        return console.log(`[HLSWish] URL encontrada: ${i.substring(0, 80)}...`), { url: i, quality: yield y(i, { Referer: r + "/", "User-Agent": g }), headers: { "User-Agent": g, Referer: r + "/" } };
       }
       let u = c.match(/eval\(function\(p,a,c,k,e,[a-z]\)\{[^}]+\}\s*\('([\s\S]+?)',\s*(\d+),\s*(\d+),\s*'([\s\S]+?)'\.split\('\|'\)/);
       if (u) {
         let i = ee(u[1], parseInt(u[2]), u[4].split("|")), l = te(i, r);
         if (l)
-          return console.log(`[HLSWish] URL encontrada: ${l.substring(0, 80)}...`), { url: l, quality: yield y(l, { Referer: r + "/" }), headers: { "User-Agent": $, Referer: r + "/" } };
+          return console.log(`[HLSWish] URL encontrada: ${l.substring(0, 80)}...`), { url: l, quality: yield y(l, { Referer: r + "/", "User-Agent": g }), headers: { "User-Agent": g, Referer: r + "/" } };
       }
       let a = c.match(/https?:\/\/[^"'\s\\]+\.m3u8[^"'\s\\]*/i);
-      return a ? (console.log(`[HLSWish] URL encontrada: ${a[0].substring(0, 80)}...`), { url: a[0], quality: yield y(a[0], { Referer: r + "/" }), headers: { "User-Agent": $, Referer: r + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
+      return a ? (console.log(`[HLSWish] URL encontrada: ${a[0].substring(0, 80)}...`), { url: a[0], quality: yield y(a[0], { Referer: r + "/", "User-Agent": g }), headers: { "User-Agent": g, Referer: r + "/" } }) : (console.log("[HLSWish] No se encontr\xF3 URL"), null);
     } catch (o) {
       return console.log(`[HLSWish] Error: ${o.message}`), null;
     }
@@ -390,7 +390,7 @@ function me(e, t, o, r) {
         return console.log("[Hackstore] No embeds"), [];
       console.log(`[Hackstore] Embeds encontrados: ${a.length}`);
       let l = (yield Promise.allSettled(a.map((f) => {
-        let h = U(g({}, f), { lang: f.lang || "LAT" });
+        let h = H(w({}, f), { lang: f.lang || "LAT" });
         return he(h);
       }))).filter((f) => f.status === "fulfilled" && f.value !== null).map((f) => f.value), d = ((Date.now() - n) / 1e3).toFixed(2);
       return console.log(`[Hackstore] \u2713 ${l.length} streams encontrados (${d}s)`), l;
